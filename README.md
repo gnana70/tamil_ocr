@@ -12,13 +12,14 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 ## How to use
 1. Clone the repository
 2. Pip install the required modules using
-3. Download the models weights from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it under model_weights 
+   ``` pip install -r requirements.txt```
+4. Download the models weights from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it under model_weights 
     
         |___model_weights
             |_____craft_mlt_25k.pth
             |_____parseq_tamil_v4.ckpt
     
-4. Run the below code by providing the path
+5. Run the below code by providing the path
 
 ```python
 from inference import ocr_predict
