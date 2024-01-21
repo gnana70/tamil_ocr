@@ -1,7 +1,7 @@
 # tamil_ocr
 ## Tamil OCR 
 
-Finetuned version of PARSEQ model on Tamil text. This works best for text present in everday's life (scene texts) and needs finetuning on the Document portion (better to use Tesseract if document is clear). This model is work in progress, feel free to contribute
+Finetuned version of PARSEQ model on Tamil text. This works best for text present in everday's life (scene texts) and needs finetuning on the Document part (better to use Tesseract if document is clear). This model is work in progress, feel free to contribute!!!
 
 Tamil OCR involves two step process
 1. Text Detection by CRAFT text detection model
