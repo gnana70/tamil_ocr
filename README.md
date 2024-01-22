@@ -31,15 +31,13 @@ print(texts)
 ```
 
 ## Samples
-<img width="1000" alt="teaser" src="./test_images/signboard_1.jpg">
+<img width="800" alt="teaser" src="./test_images/signboard_1.jpg">
 
-#### output: இலுப்பக்கேரை நெடுஞ்சாலைத்துறை ILUPPAKKORAI ள்
+#### output: நெடுஞ்சாலைத்துறை இலுப்பக்கேரை ILUPPAKKORAI
 
+<img width="800" alt="teaser" src="./test_images/signboard_2.jpg">
 
-
-<img width="1000" alt="teaser" src="./test_images/signboard_2.jpg">
-
-#### output: தாம்பரம் பெருநகராட்சு TAMBARAM MUNICIPALITY WELCOMES பிரத்தன்
+#### output: தாம்பரம பெருநகராடன் TAMBARAM MUNICIPALITY தாங்களை அன்புடன் வரவேற்கிறது WELCOMES YOU
 
 ## Thanks to the below contibuters for making awesome Text detection and text recognition models
 
