@@ -189,7 +189,7 @@ def sort_bboxes(contours):
     return contours_sorted
     
 
-def craft_detect(image,text_threshold=0.1,link_threshold=0.2,low_text=0.1,**kwargs):
+def craft_detect(image,text_threshold=0.7,link_threshold=0.25,low_text=0.40,**kwargs):
     size = max(image.shape[0],image.shape[1],1280)
     size = min(size,2560)
     
@@ -253,11 +253,7 @@ def decode_file_name(decode_text,id_to_tamil_character,special_sep_char="~"):
     tamil_word ="".join(tamil_chars)
     return tamil_word
     
-# Load model and image transforms
-ckpt_path = os.path.join("model_weights","parseq_tamil_v4.ckpt")
-parseq = load_from_checkpoint(ckpt_path).to('cpu').eval()
-img_transform = SceneTextDataModule.get_transform(parseq.hparams.img_size)
-eng_parseq = torch.hub.load('baudm/parseq', 'parseq', pretrained=True).eval()
+
 
 def read_image_input(image):
     if type(image) == str:
@@ -328,8 +324,14 @@ def ocr_predict(image,show_image=False,**kwargs):
 
     return text[:-1]
 
+# Load model and image transforms
+ckpt_path = os.path.join("model_weights","parseq_tamil_v4.ckpt")
+parseq = load_from_checkpoint(ckpt_path).to('cpu').eval()
+img_transform = SceneTextDataModule.get_transform(parseq.hparams.img_size)
+eng_parseq = torch.hub.load('baudm/parseq', 'parseq', pretrained=True).eval()
+
 if __name__ == "__main__":
-    image_path = r"test_images\signboard_2.jpg"
+    image_path = r"test_images\signboard_3.webp"
     texts = ocr_predict(image_path)
     with open("output.txt","w",encoding="utf-8") as f:
         f.write(texts)
