@@ -8,7 +8,7 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 
  Input Image                                                                | TAMIL OCR             | Tesseract         | 
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|
-| <img width="200" alt="teaser" src="./test_images/4.jpg">                   | வாழ்கவளமுடன்     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌    | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/4.jpg">                   | வாழ்கவளமுடன்     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌    | 
 | <img width="200" alt="teaser" src="./test_images/10.jpg">                  | ரெடிமேட்ஸ்          |**NO OUTPUT**      | 
 | <img width="200" alt="teaser" src="./test_images/2.jpg">                   | கோபி               | **NO OUTPUT**            | 
 | <img width="200" alt="teaser" src="./test_images/6.jpg">                   | தாம்பரம்            | **NO OUTPUT** | 
@@ -19,7 +19,43 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 ## How to USE this repo
 
 **Tested using Python 3.10 on Windows Machine**
+### Pip
+1. Using PIP install 
+```pip install ocr_tamil```
+2. Download the model weights from from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and it in the local folder
+3. Use the below code for text recognition at word level
+**Text Recognition**
+```python
+from ocr_tamil.ocr import OCR
+image_path = r"test_images\1.jpg" # insert your own path here
+model_path = r"parseq_tamil_v6.ckpt" # add the full path of the model
+ocr = OCR(tamil_model_path=model_path)
+texts = ocr.predict(image_path)
+with open("output.txt","w",encoding="utf-8") as f:
+    f.write(texts)
 
+>>>> நெடுஞ்சாலைத்
+```
+
+
+**Text Detect + Recognition**
+
+```python
+from ocr_tamil.ocr import OCR
+image_path = r"test_images\0.jpg" # insert your own path here
+model_path = r"parseq_tamil_v6.ckpt" # add the full path of the parseq model
+text_detect_model = "craft_mlt_25k.pth" # add the full path of the craft model
+ocr = OCR(detect=True,tamil_model_path=model_path)
+texts = ocr.predict(image_path)
+with open("output.txt","w",encoding="utf-8") as f:
+    f.write(texts)
+
+>>>> கொடைக்கானல் Kodaikanal 
+
+```
+
+
+### Github
 1. Clone the repository
 2. Pip install the required modules using
 3. Download the models weights from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it under model_weights 
@@ -33,7 +69,7 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 **Text Recognition**
 
 ```python
-from tamil_ocr import OCR
+from ocr_tamil.ocr import OCR
 
 image_path = r"test_images\1.jpg" # insert your own path here
 ocr = OCR()
@@ -48,7 +84,7 @@ with open("output.txt","w",encoding="utf-8") as f:
 **Text Detect + Recognition**
 
 ```python
-from tamil_ocr import OCR
+from ocr_tamil.ocr import OCR
 
 image_path = r"test_images\0.jpg" # insert your own path here
 ocr = OCR(detect=True)
