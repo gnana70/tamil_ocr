@@ -5,7 +5,7 @@ import cv2
 import gdown
 import numpy as np
 
-from craft_text_detector.image_utils import read_image
+from .image_utils import read_image
 
 
 def download(url: str, save_path: str):

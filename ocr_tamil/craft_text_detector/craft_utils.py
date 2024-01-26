@@ -7,8 +7,8 @@ from typing import Optional, Union
 import cv2
 import numpy as np
 
-import craft_text_detector.file_utils as file_utils
-import craft_text_detector.torch_utils as torch_utils
+from . import file_utils as file_utils
+from . import torch_utils as torch_utils
 
 CRAFT_GDRIVE_URL = "https://drive.google.com/uc?id=1bupFXqT-VU6Jjeul13XP7yx2Sg5IHr4J"
 REFINENET_GDRIVE_URL = (

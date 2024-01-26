@@ -4,9 +4,13 @@ import time
 import cv2
 import numpy as np
 
-import craft_text_detector.craft_utils as craft_utils
-import craft_text_detector.image_utils as image_utils
-import craft_text_detector.torch_utils as torch_utils
+# import craft_text_detector.craft_utils as craft_utils
+# import craft_text_detector.image_utils as image_utils
+# import craft_text_detector.torch_utils as torch_utils
+
+from . import craft_utils as craft_utils
+from . import image_utils as image_utils
+from . import torch_utils as torch_utils
 
 
 def get_prediction(

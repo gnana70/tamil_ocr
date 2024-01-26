@@ -3,11 +3,18 @@ from __future__ import absolute_import
 import os
 from typing import Optional
 
-import craft_text_detector.craft_utils as craft_utils
-import craft_text_detector.file_utils as file_utils
-import craft_text_detector.image_utils as image_utils
-import craft_text_detector.predict as predict
-import craft_text_detector.torch_utils as torch_utils
+from . import craft_utils as craft_utils
+from . import file_utils as file_utils
+from . import image_utils as image_utils
+from . import predict as predict
+from . import torch_utils as torch_utils
+
+
+# import craft_text_detector.craft_utils as craft_utils
+# import craft_text_detector.file_utils as file_utils
+# import craft_text_detector.image_utils as image_utils
+# import craft_text_detector.predict as predict
+# import craft_text_detector.torch_utils as torch_utils
 
 __version__ = "0.4.3"
 
