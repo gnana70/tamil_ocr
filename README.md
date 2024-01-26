@@ -99,7 +99,7 @@ Unable to read the text if they are present in rotated forms
 ## CITATION
 
 ```bibtex
-@InProceedings{Gnana Prasath,
+@InProceedings{GnanaPrasath,
   title={Tamil OCR},
   author={Gnana Prasath D},
   month={01},
