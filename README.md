@@ -9,10 +9,10 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
  Input Image                                                                | TAMIL OCR             | Tesseract         | 
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/4.jpg">                   | வாழ்கவளமுடன்     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌    | 
-| <img width="200" alt="teaser" src="./test_images/10.jpg">                  | ரெடிமேட்ஸ்          |**NO OUTPUT**      | 
-| <img width="200" alt="teaser" src="./test_images/2.jpg">                   | கோபி               | **NO OUTPUT**            | 
-| <img width="200" alt="teaser" src="./test_images/6.jpg">                   | தாம்பரம்            | **NO OUTPUT** | 
-| <img width="200" alt="teaser" src="./test_images/1.jpg">                   | நெடுஞ்சாலைத்      | **NO OUTPUT**             | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ்          |**NO OUTPUT**      | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/2.jpg">                   | கோபி               | **NO OUTPUT**            | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம்            | **NO OUTPUT** | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத்      | **NO OUTPUT**             | 
 
 **Tesseract results are tested using the [huggingface space](https://huggingface.co/spaces/kneelesh48/Tesseract-OCR) with Tamil as language**
 
@@ -100,8 +100,8 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 Unable to read the text if they are present in rotated forms
 
-<img width="200" alt="teaser" src="./test_images/8.jpg"> 
-<img width="200" alt="teaser" src="./test_images/9.jpg">
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/8.jpg"> 
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/9.jpg">
 
 
 ## Thanks to the below contibuters for making awesome Text detection and text recognition models
