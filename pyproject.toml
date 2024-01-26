@@ -1,0 +1,46 @@
+[build-system]
+requires = [
+"setuptools>=42",
+"wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ocr_tamil"
+version = "0.0.3"
+description = "Python Tamil OCR package"
+readme = "README.md"
+authors = [{ name = "Gnana Prasath", email = "gnana70@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["ocr", "tamil", "indian ocr", "tamil ocr"]
+dependencies = [
+    "torch==2.1.2",
+    "torchvision==0.16.2",
+    "Pillow==10.0.0",
+    "opencv-python==4.5.4.60",
+    "Open-Tamil",
+    "numpy",
+    "pandas",
+    "gdown",
+    "pytorch-lightning==1.9.5",
+    "lmdb",
+    "matplotlib",
+    "scikit-image",
+    "timm",
+    "nltk"
+]
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
+
+[project.urls]
+Homepage = "https://github.com/gnana70/tamil_ocr"
+
+[project.scripts]
+tamil_ocr = "tamil_ocr.tamil_ocr:main"
