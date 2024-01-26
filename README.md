@@ -14,7 +14,7 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம்            | **NO OUTPUT** | 
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத்      | **NO OUTPUT**             | 
 
-**Tesseract results are tested using the [huggingface space](https://huggingface.co/spaces/kneelesh48/Tesseract-OCR) with Tamil as language**
+**Obtained Tesseract results using the [huggingface space](https://huggingface.co/spaces/kneelesh48/Tesseract-OCR) with Tamil as language**
 
 ## How to USE this repo
 
