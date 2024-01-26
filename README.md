@@ -16,7 +16,6 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 
 **Tesseract results are tested using the [huggingface space](https://huggingface.co/spaces/kneelesh48/Tesseract-OCR) with Tamil as language**
 
-## How to use
 1. Clone the repository
 2. Pip install the required modules using
 3. Download the models weights from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it under model_weights 
