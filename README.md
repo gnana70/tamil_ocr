@@ -24,6 +24,7 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 ```pip install ocr_tamil```
 2. Download the model weights from from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and it in the local folder
 3. Use the below code for text recognition at word level
+
 **Text Recognition**
 ```python
 from ocr_tamil.ocr import OCR
