@@ -115,7 +115,11 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 ```
 
-## LIMITATIONS
+## Applications
+1. Navigating autonomous vehicles based on the signboards
+2. License plate recognition
+
+## Limitations
 
 1. Unable to read the text if they are present in rotated forms
 
