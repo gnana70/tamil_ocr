@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ocr_tamil"
-version = "0.0.6"
+version = "0.0.9"
 description = "Python Tamil OCR package"
 readme = "README.md"
 authors = [{ name = "Gnana Prasath", email = "gnana70@gmail.com" }]

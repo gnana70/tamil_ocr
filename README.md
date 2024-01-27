@@ -1,7 +1,7 @@
-# Tamil OCR 
+# OCR Tamil
 
 <p align="center">
-  <a href="License">
+  <a href="LICENSE">
     <img src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/MIT.svg" alt="LICENSE">
   </a>
 </p>
@@ -22,7 +22,7 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 
 ## OUTPUT
 
- Input Image                                                                | TAMIL OCR             | Tesseract         | 
+ Input Image                                                                |  OCR TAMIL            | Tesseract         | 
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/4.jpg">                   | வாழ்கவளமுடன்     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌    | 
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ்          |**NO OUTPUT**      | 
@@ -38,14 +38,14 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 ### Pip
 1. Using PIP install 
 ```pip install ocr_tamil```
-2. Download the model weights from from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and it in the local folder
+2. Download the model weights from from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it in the local folder to use in step 4
 3. Use the below code for text recognition at word level
 
 **Text Recognition**
 ```python
 from ocr_tamil.ocr import OCR
-image_path = r"test_images\1.jpg" # insert your own path here
-model_path = r"parseq_tamil_v6.ckpt" # add the full path of the model
+image_path = r"test_images\1.jpg" # insert your own path here (step 2 file location)
+model_path = r"parseq_tamil_v6.ckpt" # add the full path of the model(step 2 file location)
 ocr = OCR(tamil_model_path=model_path)
 texts = ocr.predict(image_path)
 with open("output.txt","w",encoding="utf-8") as f:
@@ -74,7 +74,7 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 ### Github
 1. Clone the repository
-2. Pip install the required modules using
+2. Pip install the required modules using ```pip install -r requirements.txt```
 3. Download the models weights from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it under model_weights 
     
         |___model_weights
