@@ -170,4 +170,4 @@ with open("output.txt","w",encoding="utf-8") as f:
 }
 ```
 
-![logo](https://github.com/gnana70/tamil_ocr/raw/amin/test_images/logo.gif)
+![logo](https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo.gif)
