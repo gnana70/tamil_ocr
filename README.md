@@ -7,7 +7,11 @@
 </p>
 
 <div align="center">
-![logo](https://github.com/gnana70/tamil_ocr/raw/develop/test_images/logo_.gif)
+  <p>
+    <a href="https://github.com/gnana70/tamil_ocr">
+    <img width="50%" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo.gif">
+    </a>
+  </p>
 </div>
 
 Finetuned version of PARSEQ model on Tamil text. This version of OCR is much more robust to tilted text compared to the Tesseract, Paddle OCR and Easy OCR. This model is work in progress, feel free to contribute!!!
@@ -166,3 +170,4 @@ with open("output.txt","w",encoding="utf-8") as f:
 }
 ```
 
+![logo](https://github.com/gnana70/tamil_ocr/raw/amin/test_images/logo.gif)
