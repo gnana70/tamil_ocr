@@ -123,7 +123,7 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 <p align="left">
 <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/9.jpg"> 
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/8.jpg">
 </p>
 
 2. Currently supports Only English and Tamil Language
