@@ -28,18 +28,19 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ்          |**NO OUTPUT**      | 
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/2.jpg">                   | கோபி               | **NO OUTPUT**            | 
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம்            | **NO OUTPUT** | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத்      | **NO OUTPUT**             | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத்      | **NO OUTPUT**             |
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/5.jpg">                   | அண்ணாசாலை      | **NO OUTPUT**             |  
 
 **Obtained Tesseract results using the [huggingface space](https://huggingface.co/spaces/kneelesh48/Tesseract-OCR) with Tamil as language**
 
 ## How to USE this repo
 
-**Tested using Python 3.10 on Windows Machine**
+**Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
 ### Pip
 1. Using PIP install 
 ```pip install ocr_tamil```
-2. Download the model weights from from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it in the local folder to use in step 4
-3. Use the below code for text recognition at word level
+2. Download the model weights from from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it in the local folder to use in step 3
+3. Use the below code for text recognition at word level by inserting the image_path and model path
 
 **Text Recognition**
 ```python
@@ -50,12 +51,14 @@ ocr = OCR(tamil_model_path=model_path)
 texts = ocr.predict(image_path)
 with open("output.txt","w",encoding="utf-8") as f:
     f.write(texts)
-
 >>>> நெடுஞ்சாலைத்
 ```
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1_180.jpg">
 
 
 **Text Detect + Recognition**
+
+4. Use the below code for text detection and recognition by inserting the image_path and model path s (both detection and recognition models)
 
 ```python
 from ocr_tamil.ocr import OCR
@@ -70,6 +73,7 @@ with open("output.txt","w",encoding="utf-8") as f:
 >>>> கொடைக்கானல் Kodaikanal 
 
 ```
+<img width="400" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/0.jpg">
 
 
 ### Github
@@ -115,11 +119,14 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 ## LIMITATIONS
 
-Unable to read the text if they are present in rotated forms
+1. Unable to read the text if they are present in rotated forms
 
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/8.jpg"> 
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/9.jpg">
+<p align="left">
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/9.jpg"> 
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/8.jpg">
+</p>
 
+2. Currently supports Only English and Tamil Language
 
 ## Thanks to the below contibuters for making awesome Text detection and text recognition models
 
