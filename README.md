@@ -121,9 +121,9 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 1. Unable to read the text if they are present in rotated forms
 
-<p align="center">
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/8.jpg"> 
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/9.jpg">
+<p align="left">
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/9.jpg"> 
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">
 </p>
 
 2. Currently supports Only English and Tamil Language
