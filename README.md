@@ -1,5 +1,11 @@
 # Tamil OCR 
 
+<div align="center">
+  <p>
+    <img width="100%" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo.png">
+  </p>
+
+<div>
 
 Finetuned version of PARSEQ model on Tamil text. This version of OCR is much more robust to tilted text compared to the Tesseract, Paddle OCR and Easy OCR. This model is work in progress, feel free to contribute!!!
 
