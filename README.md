@@ -1,6 +1,7 @@
 # Tamil OCR 
 
-Finetuned version of PARSEQ model on Tamil text. This version of OCR is much more robust to tilted text compared to the Tesseract, Paddle OCR and Easy OCR. Works best for text present in everday's life (scene texts). This model is work in progress, feel free to contribute!!!
+
+Finetuned version of PARSEQ model on Tamil text. This version of OCR is much more robust to tilted text compared to the Tesseract, Paddle OCR and Easy OCR. This model is work in progress, feel free to contribute!!!
 
 Currently supports two languages (English + Tamil). Accuracy of the model can be improved by adjusting the Text detection model as per your requirements. Achieved the accuracy of around **>95%** (98% NED) in validation set
 
@@ -46,7 +47,7 @@ from ocr_tamil.ocr import OCR
 image_path = r"test_images\0.jpg" # insert your own path here
 model_path = r"parseq_tamil_v6.ckpt" # add the full path of the parseq model
 text_detect_model = "craft_mlt_25k.pth" # add the full path of the craft model
-ocr = OCR(detect=True,tamil_model_path=model_path)
+ocr = OCR(detect=True,tamil_model_path=model_path,detect_model_path=text_detect_model)
 texts = ocr.predict(image_path)
 with open("output.txt","w",encoding="utf-8") as f:
     f.write(texts)
@@ -63,7 +64,7 @@ with open("output.txt","w",encoding="utf-8") as f:
     
         |___model_weights
             |_____craft_mlt_25k.pth
-            |_____parseq_tamil.ckpt
+            |_____parseq_tamil_v6.ckpt
     
 4. Run the below code by providing the path 
 
