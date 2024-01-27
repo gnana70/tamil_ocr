@@ -35,7 +35,7 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 
 ## How to USE this repo
 
-**Tested using Python 3.10 on Windows Machine**
+**Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
 ### Pip
 1. Using PIP install 
 ```pip install ocr_tamil```
