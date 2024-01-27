@@ -1,9 +1,16 @@
 # Tamil OCR 
 
+<p align="center">
+  <a href="License">
+    <img src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/MIT.svg" alt="LICENSE">
+  </a>
+</p>
+
+
 <div align="center">
   <p>
     <a href="https://github.com/gnana70/tamil_ocr">
-    <img width="50%" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo.png">
+    <img width="50%" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo.gif">
     </a>
   </p>
 
