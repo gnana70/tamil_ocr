@@ -166,9 +166,14 @@ class CTCTokenizer(BaseTokenizer):
 class OCR:
     def __init__(self,detect=False,
                  tamil_model_path=os.path.join(current_path,"model_weights","parseq_tamil_v6.ckpt"),
-                 detect_model_path=os.path.join(current_path,"model_weights","craft_mlt_25k.pth")) -> None:
-    
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+                 detect_model_path=os.path.join(current_path,"model_weights","craft_mlt_25k.pth"),
+                 enable_cuda=True) -> None:
+
+        if enable_cuda:
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        else:
+            self.device = torch.device('cpu')
+        print(enable_cuda)
         print('Device:', self.device)
         self.output_dir = "temp_images"
 
@@ -179,7 +184,7 @@ class OCR:
         self.load_model()
 
         if self.detect:
-            if torch.cuda.is_available():# load models
+            if torch.cuda.is_available() and enable_cuda:# load models
                 self.gpu=True
                 self.craft_net = load_craftnet_model(cuda=True,weight_path=self.detect_model_path)
             else:
@@ -189,7 +194,7 @@ class OCR:
     def load_model(self):
         self.tamil_parseq = load_from_checkpoint(self.tamil_model_path).to(self.device).eval()
         self.img_transform = SceneTextDataModule.get_transform(self.tamil_parseq.hparams.img_size)
-        self.eng_parseq = torch.hub.load('baudm/parseq', 'parseq', pretrained=True).eval()
+        self.eng_parseq = torch.hub.load('baudm/parseq', 'parseq', pretrained=True).to(self.device).eval()
 
     def sort_bboxes(self,contours):
         c = np.array(contours)
@@ -303,6 +308,8 @@ class OCR:
         
         img_org = Image.fromarray(np.uint8(img_org)).convert('RGB')
         img = self.img_transform(img_org.convert('RGB')).unsqueeze(0)
+
+        img = img.to(self.device)
     
         # tamil decode
         logits = self.tamil_parseq(img)
@@ -315,9 +322,9 @@ class OCR:
         logits = self.eng_parseq(img)
         pred = logits.softmax(-1)
         eng_label, eng_confidence = self.eng_parseq.tokenizer.decode(pred)
-    
-        avg_eng_conf = sum(eng_confidence[0].detach().numpy())/len(eng_confidence[0].detach().numpy())
-        avg_tam_conf = sum(confidence[0].detach().numpy())/len(confidence[0].detach().numpy())
+
+        avg_eng_conf = sum(eng_confidence[0].cpu().detach().numpy())/len(eng_confidence[0].cpu().detach().numpy())
+        avg_tam_conf = sum(confidence[0].cpu().detach().numpy())/len(confidence[0].cpu().detach().numpy())
     
         if avg_eng_conf > avg_tam_conf:
             label = eng_label[0]
