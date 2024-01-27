@@ -14,11 +14,11 @@
   </p>
 </div>
 
- OCR Tamil can help you extract text from signboard, nameplates and texts from Natural Scenes with high accuracy. This version of OCR is much more robust to tilted text compared to the Tesseract, Paddle OCR and Easy OCR as they are primarily built to work on the documents texts and not on natural scenes. This model is work in progress, feel free to contribute!!!
+ OCR Tamil can help you extract text from signboard, nameplates, storefronts etc., from Natural Scenes with high accuracy. This version of OCR is much more robust to tilted text compared to the Tesseract, Paddle OCR and Easy OCR as they are primarily built to work on the documents texts and not on natural scenes. This model is work in progress, feel free to contribute!!!
 
 Currently supports two languages (English + Tamil). Accuracy of the model can be improved by adjusting the Text detection model as per your requirements. Achieved the accuracy of around **>95%** (98% NED) in validation set
 
-## OUTPUT
+## Comparison between Tesseract OCR and OCR Tamil
 
  Input Image                                                                |  OCR TAMIL            | Tesseract         | 
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|
