@@ -130,6 +130,15 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 2. Currently supports Only English and Tamil Language
 
+3. Document Text reading capability is limited. Auto identification of Paragraph, line are not supported along with Text detection model inability to detect properly crop the text leads to incorrect text recognition (**workaround** Can use your own text detection model along with OCR tamil recognition model)
+
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/develop/test_images/tamil_sentence.jpg">
+
+Text **இ** missing due to text detection model error
+
+**?**யற்கை மூலிகைகளில் இருந்து ஈர்த்தெடுக்கக்கப்பட்ட விரிய உட்பொருட்களை உள்ளடக்கி எந்த இரசாயன சேர்க்கைகளும் ல்லாமல் உருவாக்கப்பட்ட **?**ந்தியாவின் முதல் சித்த தயாரிப்பு 
+
+
 ## Thanks to the below contibuters for making awesome Text detection and text recognition models
 
 **Text detection** - [CRAFT TEXT DECTECTION](https://github.com/clovaai/CRAFT-pytorch)
