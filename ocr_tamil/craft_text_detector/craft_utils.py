@@ -52,7 +52,7 @@ def load_craftnet_model(
     weight_path = str(weight_path)
 
     # load craft net
-    from craft_text_detector.models.craftnet import CraftNet
+    from .models.craftnet import CraftNet
 
     craft_net = CraftNet()  # initialize
 
