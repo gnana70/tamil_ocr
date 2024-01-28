@@ -132,13 +132,13 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 3. Document Text reading capability is limited. Auto identification of Paragraph, line are not supported along with Text detection model inability to detect and crop the Tamil text leads to accuracy decrease (**WORKAROUND** Can use your own text detection model along with OCR tamil text recognition model)
 <p align="center">
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/develop/test_images/tamil_sentence.jpg">
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/tamil_sentence.jpg">
 </p>
 <p align="center">
 <span>Cropped Text from Text detection Model</span>
 </p>
 <p align="center">
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/develop/test_images/tamil_sentence_crop.jpg">
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/tamil_sentence_crop.jpg">
 </p>
 <p align="center">
 Character **இ** missing due to text detection model error 
