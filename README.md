@@ -9,7 +9,7 @@
 <div align="center">
   <p>
     <a href="https://github.com/gnana70/tamil_ocr">
-    <img width="50%" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo.gif">
+    <img width="50%" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo_1.gif">
     </a>
   </p>
 </div>
@@ -191,4 +191,4 @@ Character **இ** missing due to text detection model error
 }
 ```
 
-![logo](https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo.gif)
+![logo](https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo_1.gif)
