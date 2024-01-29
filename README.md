@@ -4,7 +4,11 @@
   <a href="LICENSE">
     <img src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/MIT.svg" alt="LICENSE">
   </a>
+  <a href="https://huggingface.co/spaces/GnanaPrasath/ocr_tamil">
+    <img src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/huggingface.svg" alt="HuggingSpace">
+  </a>
 </p>
+
 
 <div align="center">
   <p>
