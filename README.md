@@ -119,6 +119,10 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 ```
 
+#### Detailed Medium tutorial can be found [here](https://gnana70.medium.com/ocr-tamil-easy-accurate-and-simple-to-use-tamil-ocr-b03b98697f7b). 
+
+#### Huggingface spaces🤗 demo can be found [here](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
+
 ## Applications
 1. Navigating autonomous vehicles based on the signboards
 2. License plate recognition

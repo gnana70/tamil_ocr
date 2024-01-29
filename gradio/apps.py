@@ -26,6 +26,7 @@ input_2 = gr.Radio(["recognize", "detect"], label="mode",
 
 examples = [[i,j] for i,j in zip(image_examples,mode_examples)]
 
+
 gr.Interface(
     predict,
     inputs=[input_1,input_2],
