@@ -204,8 +204,8 @@ class CTCTokenizer(BaseTokenizer):
 
 class OCR:
     def __init__(self,detect=False,
-                 tamil_model_path=os.path.join(current_path,"model_weights","parseq_tamil_v6.ckpt"),
-                 detect_model_path=os.path.join(current_path,"model_weights","craft_mlt_25k.pth"),
+                 tamil_model_path=None,
+                 detect_model_path=None,
                  enable_cuda=True) -> None:
 
         if enable_cuda:
@@ -217,16 +217,23 @@ class OCR:
         self.output_dir = "temp_images"
 
         self.detect = detect
-        self.tamil_model_path = tamil_model_path
-        self.detect_model_path = detect_model_path
+        
 
         tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil_v6.ckpt"
         detect_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/craft_mlt_25k.pth"
         
         model_save_location = os.path.join(Path.home(),".model_weights")
 
-        download(tamil_file_url,model_save_location)
-        download(detect_file_url,model_save_location)
+        self.tamil_model_path = tamil_model_path
+        self.detect_model_path = detect_model_path
+
+        if tamil_model_path is None:
+            download(tamil_file_url,model_save_location)
+            self.tamil_model_path = os.path.join(model_save_location,"parseq_tamil_v6.ckpt")
+
+        if detect_model_path is None:
+            download(detect_file_url,model_save_location)
+            self.detect_model_path = os.path.join(model_save_location,"craft_mlt_25k.pth")
 
         self.load_model()
 
