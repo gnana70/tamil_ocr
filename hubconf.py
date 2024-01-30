@@ -11,7 +11,7 @@ def parseq_tiny(pretrained: bool = False, decode_ar: bool = True, refine_iters: 
     @param decode_ar: (bool) use AR decoding
     @param refine_iters: (int) number of refinement iterations to use
     """
-    return create_model('parseq-tiny', pretrained, decode_ar=decode_ar, refine_iters=refine_iters, **kwargs)
+    return create_model('parseq', pretrained, decode_ar=decode_ar, refine_iters=refine_iters,tamil=True, **kwargs)
 
 
 def parseq(pretrained: bool = False, decode_ar: bool = True, refine_iters: int = 1, **kwargs):
