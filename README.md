@@ -41,15 +41,13 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 ### Pip
 1. Using PIP install 
 ```pip install ocr_tamil```
-2. Download the model weights from from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it in the local folder to use in step 3
-3. Use the below code for text recognition at word level by inserting the image_path and model path
+2. Use the below code for text recognition at word level by inserting the image_path
 
 **Text Recognition**
 ```python
 from ocr_tamil.ocr import OCR
 image_path = r"test_images\1.jpg" # insert your own path here (step 2 file location)
-model_path = r"parseq_tamil_v6.ckpt" # add the full path of the model(step 2 file location)
-ocr = OCR(tamil_model_path=model_path)
+ocr = OCR()
 texts = ocr.predict(image_path)
 with open("output.txt","w",encoding="utf-8") as f:
     f.write(texts)
@@ -60,14 +58,12 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 **Text Detect + Recognition**
 
-4. Use the below code for text detection and recognition by inserting the image_path and model path s (both detection and recognition models)
+4. Use the below code for text detection and recognition by inserting the image_path
 
 ```python
 from ocr_tamil.ocr import OCR
 image_path = r"test_images\0.jpg" # insert your own path here
-model_path = r"parseq_tamil_v6.ckpt" # add the full path of the parseq model
-text_detect_model = "craft_mlt_25k.pth" # add the full path of the craft model
-ocr = OCR(detect=True,tamil_model_path=model_path,detect_model_path=text_detect_model)
+ocr = OCR(detect=True)
 texts = ocr.predict(image_path)
 with open("output.txt","w",encoding="utf-8") as f:
     f.write(texts)
@@ -81,13 +77,7 @@ with open("output.txt","w",encoding="utf-8") as f:
 ### Github
 1. Clone the repository
 2. Pip install the required modules using ```pip install -r requirements.txt```
-3. Download the models weights from the [GDRIVE](https://drive.google.com/drive/folders/1oMxdp7VE4Z0uHQkHr1VIrXYfyjZ_WwFV?usp=sharing) and keep it under model_weights 
-    
-        |___model_weights
-            |_____craft_mlt_25k.pth
-            |_____parseq_tamil_v6.ckpt
-    
-4. Run the below code by providing the path 
+3. Run the below code by providing the image path 
 
 **Text Recognition**
 

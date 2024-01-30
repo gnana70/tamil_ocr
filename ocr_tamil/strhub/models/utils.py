@@ -24,10 +24,12 @@ _WEIGHTS_URL = {
 def _get_config(experiment: str, **kwargs):
     """Emulates hydra config resolution"""
     root = PurePath(__file__).parents[2]
+
     with open(root / 'configs/main.yaml', 'r') as f:
         config = yaml.load(f, yaml.Loader)['model']
     with open(root / f'configs/charset/94_full.yaml', 'r') as f:
         config.update(yaml.load(f, yaml.Loader)['model'])
+
     with open(root / f'configs/experiment/{experiment}.yaml', 'r') as f:
         exp = yaml.load(f, yaml.Loader)
     # Apply base model config
@@ -44,18 +46,14 @@ def _get_config(experiment: str, **kwargs):
 
 
 def _get_model_class(key):
-    if 'abinet' in key:
-        from .abinet.system import ABINet as ModelClass
-    elif 'crnn' in key:
-        from .crnn.system import CRNN as ModelClass
-    elif 'parseq' in key:
+
+    if 'parseq' in key:
         from .parseq.system import PARSeq as ModelClass
-    elif 'trba' in key:
-        from .trba.system import TRBA as ModelClass
-    elif 'trbc' in key:
-        from .trba.system import TRBC as ModelClass
-    elif 'vitstr' in key:
-        from .vitstr.system import ViTSTR as ModelClass
+
+    if 'parseq_tamil' in key:
+        from .parseq.system import PARSeq as ModelClass
+
+    
     else:
         raise InvalidModelError(f"Unable to find model class for '{key}'")
     return ModelClass

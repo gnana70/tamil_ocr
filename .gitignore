@@ -160,7 +160,6 @@ cython_debug/
 #.idea/
 
 *.ipynb_checkpoints
-*.pth
 .ckpt 
 code.txt
 test_venv
