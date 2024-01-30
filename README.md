@@ -58,7 +58,7 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 **Text Detect + Recognition**
 
-4. Use the below code for text detection and recognition by inserting the image_path and model path s (both detection and recognition models)
+4. Use the below code for text detection and recognition by inserting the image_path
 
 ```python
 from ocr_tamil.ocr import OCR
