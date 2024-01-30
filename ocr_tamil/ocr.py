@@ -1,6 +1,8 @@
 # import craft functions
 import sys
 import os
+import traceback
+from tqdm import tqdm
 
 from ocr_tamil.strhub.data.module import SceneTextDataModule
 from ocr_tamil.strhub.models.utils import load_from_checkpoint
@@ -12,6 +14,7 @@ from ocr_tamil.craft_text_detector import (
 )
 
 import pathlib
+from pathlib import Path
 current_path = pathlib.Path(__file__).parent.resolve()
 # print(current_path)
 
@@ -42,6 +45,42 @@ tamil_character_to_id = {'ஃ': '0', 'அ': '1', 'ஆ': '2', 'இ': '3', 'ஈ': 
  'ஹை': '294', 'ஹொ': '295', 'ஹோ': '296', 'ஹௌ': '297', 'ஹ்': '298'}
 
 id_to_tamil_character = {v:k for k,v in tamil_character_to_id.items()}
+
+import os
+import requests
+
+
+def download(url: str, dest_folder: str):
+    if not os.path.exists(dest_folder):
+        os.makedirs(dest_folder)  # create folder if it does not exist
+
+    filename = url.split('/')[-1].replace(" ", "_")  # be careful with file names
+    file_path = os.path.join(dest_folder, filename)
+
+    if not os.path.exists(file_path):
+        try:
+            response = requests.get(url, stream=True)
+            if response.ok:
+                print("saving to", os.path.abspath(file_path))
+                print("Download would take several minutes")
+
+                total_size = int(response.headers.get("content-length", 0))
+                block_size = 1024
+
+                with tqdm(total=total_size, unit="B", unit_scale=True) as progress_bar:
+                    with open(file_path, "wb") as file:
+                        for data in response.iter_content(block_size):
+                            progress_bar.update(len(data))
+                            file.write(data)
+
+                if total_size != 0 and progress_bar.n != total_size:
+                    raise RuntimeError("Could not download file")
+
+            else:  # HTTP status code 4XX/5XX
+                print("Download failed: status code {}\n{}".format(response.status_code, response.text))
+        except Exception as e:
+            print("Download failed: {e}")
+            os.remove(file_path)
 
 class CharsetAdapter:
     """Transforms labels according to the target charset."""
@@ -181,6 +220,14 @@ class OCR:
         self.tamil_model_path = tamil_model_path
         self.detect_model_path = detect_model_path
 
+        tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil_v6.ckpt"
+        detect_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/craft_mlt_25k.pth"
+        
+        model_save_location = os.path.join(Path.home(),".model_weights")
+
+        download(tamil_file_url,model_save_location)
+        download(detect_file_url,model_save_location)
+
         self.load_model()
 
         if self.detect:
@@ -312,14 +359,16 @@ class OCR:
         img = img.to(self.device)
     
         # tamil decode
-        logits = self.tamil_parseq(img)
+        with torch.inference_mode():
+            logits = self.tamil_parseq(img)
         # Greedy decoding
         pred = logits.softmax(-1)
         label, confidence = self.tamil_parseq.tokenizer.decode(pred)
         label = self.decode_file_name(label[0],id_to_tamil_character)
     
         # english decode
-        logits = self.eng_parseq(img)
+        with torch.inference_mode():
+            logits = self.eng_parseq(img)
         pred = logits.softmax(-1)
         eng_label, eng_confidence = self.eng_parseq.tokenizer.decode(pred)
 
