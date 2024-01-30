@@ -192,7 +192,7 @@ class OCR:
                 self.craft_net = load_craftnet_model(cuda=False,weight_path=self.detect_model_path)
 
     def load_model(self):
-        self.tamil_parseq = load_from_checkpoint(self.tamil_model_path).to(self.device).eval()
+        self.tamil_parseq = torch.load(self.tamil_model_path).to(self.device).eval()
         self.img_transform = SceneTextDataModule.get_transform(self.tamil_parseq.hparams.img_size)
         self.eng_parseq = torch.hub.load('baudm/parseq', 'parseq', pretrained=True).to(self.device).eval()
 
