@@ -161,7 +161,7 @@ cython_debug/
 
 *.ipynb_checkpoints
 *.pth
-*.ckpt 
+.ckpt 
 code.txt
 test_venv
 test_folder
