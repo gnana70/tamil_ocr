@@ -59,7 +59,7 @@ def download(url: str, dest_folder: str):
 
     if not os.path.exists(file_path):
         try:
-            response = requests.get(url, stream=True)
+            response = requests.get(url, stream=True,verify=False)
             if response.ok:
                 print("saving to", os.path.abspath(file_path))
                 print("Download would take several minutes")
@@ -80,6 +80,7 @@ def download(url: str, dest_folder: str):
                 print("Download failed: status code {}\n{}".format(response.status_code, response.text))
         except Exception as e:
             print("Download failed: {e}")
+            print("You can also manually download the file from github and keep under home_folder\.model_weights")
             os.remove(file_path)
 
 class CharsetAdapter:
