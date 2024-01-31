@@ -212,7 +212,7 @@ class OCR:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         else:
             self.device = torch.device('cpu')
-        print(enable_cuda)
+        # print(enable_cuda)
         print('Device:', self.device)
         self.output_dir = "temp_images"
 
@@ -276,7 +276,7 @@ class OCR:
         
 
     def craft_detect(self,image,text_threshold=0.7,link_threshold=0.25,low_text=0.40,**kwargs):
-        size = max(image.shape[0],image.shape[1],1280)
+        size = max(image.shape[0],image.shape[1],640)
         size = min(size,2560)
         
         # perform prediction
