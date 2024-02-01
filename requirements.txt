@@ -112,7 +112,7 @@ packaging==23.2
     #   torchmetrics
 pandas==2.2.0
     # via ocr_tamil (pyproject.toml)
-pillow==10.0.0
+pillow==10.2.0
     # via
     #   imageio
     #   matplotlib
