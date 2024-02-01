@@ -7,6 +7,9 @@
   <a href="https://huggingface.co/spaces/GnanaPrasath/ocr_tamil">
     <img src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/huggingface.svg" alt="HuggingSpace">
   </a>
+   <a href="https://colab.research.google.com/drive/11QPPj3EmpoIqnpuIznKeP1icxvVOjfux?usp=sharing">
+    <img src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/colab.svg" alt="colab">
+  </a>
 </p>
 
 
@@ -37,7 +40,14 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 
 ## How to Install and Use OCR Tamil 
 
-**Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
+### Quick links
+1. Detailed explanation on [Medium article](https://gnana70.medium.com/ocr-tamil-easy-accurate-and-simple-to-use-tamil-ocr-b03b98697f7b). 
+
+2. [Colab notebook](https://colab.research.google.com/drive/11QPPj3EmpoIqnpuIznKeP1icxvVOjfux?usp=sharing)
+
+3. [Huggingface spaces🤗](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
+
+
 ### Pip
 1. Using PIP install 
 ```pip install ocr_tamil```
@@ -107,11 +117,10 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 >>>> கொடைக்கானல் Kodaikanal 
 
+
+**Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
+
 ```
-
-#### Detailed Medium tutorial can be found [here](https://gnana70.medium.com/ocr-tamil-easy-accurate-and-simple-to-use-tamil-ocr-b03b98697f7b). 
-
-#### Huggingface spaces🤗 demo can be found [here](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
 
 ## Applications
 1. Navigating autonomous vehicles based on the signboards
