@@ -21,13 +21,8 @@ from typing import Optional, Tuple, List
 import pytorch_lightning as pl
 import torch
 import torch.nn.functional as F
-from nltk import edit_distance
 from pytorch_lightning.utilities.types import EPOCH_OUTPUT, STEP_OUTPUT
-from timm.optim import create_optimizer_v2
 from torch import Tensor
-from torch.optim import Optimizer
-from torch.optim.lr_scheduler import OneCycleLR
-
 from ocr_tamil.strhub.data.utils import CharsetAdapter, CTCTokenizer, Tokenizer, BaseTokenizer
 
 
@@ -82,19 +77,6 @@ class BaseSystem(pl.LightningModule, ABC):
         """
         raise NotImplementedError
 
-    def configure_optimizers(self):
-        agb = self.trainer.accumulate_grad_batches
-        # Linear scaling so that the effective learning rate is constant regardless of the number of GPUs used with DDP.
-        lr_scale = agb * math.sqrt(self.trainer.num_devices) * self.batch_size / 256.
-        lr = lr_scale * self.lr
-        optim = create_optimizer_v2(self, 'adamw', lr, self.weight_decay)
-        sched = OneCycleLR(optim, lr, self.trainer.estimated_stepping_batches, pct_start=self.warmup_pct,
-                           cycle_momentum=False)
-        return {'optimizer': optim, 'lr_scheduler': {'scheduler': sched, 'interval': 'step'}}
-
-    def optimizer_zero_grad(self, epoch: int, batch_idx: int, optimizer: Optimizer, optimizer_idx: int):
-        optimizer.zero_grad(set_to_none=True)
-
     def _eval_step(self, batch, validation: bool) -> Optional[STEP_OUTPUT]:
         images, labels = batch
 
@@ -121,7 +103,8 @@ class BaseSystem(pl.LightningModule, ABC):
             confidence += prob.prod().item()
             pred = self.charset_adapter(pred)
             # Follow ICDAR 2019 definition of N.E.D.
-            ned += edit_distance(pred, gt) / max(len(pred), len(gt))
+            # ned += edit_distance(pred, gt) / max(len(pred), len(gt))
+            ned += 0
             if pred == gt:
                 correct += 1
             total += 1

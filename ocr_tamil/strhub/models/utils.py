@@ -49,10 +49,6 @@ def _get_model_class(key):
 
     if 'parseq' in key:
         from .parseq.system import PARSeq as ModelClass
-
-    if 'parseq_tamil' in key:
-        from .parseq.system import PARSeq as ModelClass
-
     
     else:
         raise InvalidModelError(f"Unable to find model class for '{key}'")
