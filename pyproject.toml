@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ocr_tamil"
-version = "0.1.7"
+version = "0.1.9"
 description = "Python Tamil OCR package"
 readme = "README.md"
 authors = [{ name = "Gnana Prasath", email = "gnana70@gmail.com" }]
@@ -28,11 +28,11 @@ dependencies = [
     "pandas",
     "gdown",
     "pytorch-lightning==1.9.5",
-    "lmdb",
     "matplotlib",
     "scikit-image",
     "timm",
-    "nltk"
+    "onnx",
+    "onnxruntime"
 ]
 requires-python = ">=3.9"
 
