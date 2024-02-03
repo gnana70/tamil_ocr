@@ -1,6 +1,6 @@
 from ocr_tamil.ocr import OCR
 
-image_path = r"test_images\12_1.jpg" # insert your own path here
+image_path = r"test_images\1.jpg" # insert your own path here
 ocr = OCR(detect=False,enable_cuda=False)
 texts = ocr.predict(image_path,save_image=True)
 
