@@ -40,6 +40,7 @@ import matplotlib.pyplot as plt
 
 import skimage
 from ocr_tamil.strhub.data.utils import Tokenizer, BaseTokenizer
+from ocr_tamil.strhub.models.utils import load_from_checkpoint
 
 
 import warnings
@@ -105,7 +106,7 @@ class OCR:
         self.detect = detect
         
 
-        tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil_v6.ckpt"
+        tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil.pt"
         eng_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_eng.onnx"
         detect_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/craft_mlt_25k.pth"
         
@@ -117,7 +118,7 @@ class OCR:
 
         if tamil_model_path is None:
             download(tamil_file_url,model_save_location)
-            self.tamil_model_path = os.path.join(model_save_location,"parseq_tamil_v6.ckpt")
+            self.tamil_model_path = os.path.join(model_save_location,"parseq_tamil.pt")
 
         if tamil_model_path is None:
             download(eng_file_url,model_save_location)
@@ -153,6 +154,9 @@ class OCR:
         # self.eng_model_path = r"ocr_tamil\model_weights\parseq_eng.onnx"
         self.eng_parseq = self.initialize_onnx_model(self.eng_model_path)
         self.eng_tokenizer = Tokenizer(self.eng_character_set)
+
+        # self.temp_model = load_from_checkpoint("ocr_tamil\model_weights\parseq_tamil.ckpt").to(self.device).eval()
+        # torch.save(self.temp_model,"ocr_tamil\model_weights\parseq_tamil.pt")
 
     def to_numpy(self,tensor):
         return tensor.cpu().numpy()
@@ -190,8 +194,10 @@ class OCR:
         return contours_sorted
         
 
-    def craft_detect(self,image,text_threshold=0.7,link_threshold=0.25,low_text=0.40,**kwargs):
+    def craft_detect(self,image,text_threshold=0.7,link_threshold=0.25,low_text=0.30,**kwargs):
         size = max(image.shape[0],image.shape[1],640)
+
+        # Reshaping to the nearest size
         size = min(size,2560)
         
         # perform prediction
@@ -311,11 +317,13 @@ class OCR:
 
         return exported_regions
     
-    def predict(self,image):
+    def predict(self,image,save_image=False):
         image = self.read_image_input(image)
 
         if self.detect:
             exported_regions = self.text_detect(image)
+            # if save_image:
+            #     [cv2.imwrite(os.path.join("temp_images",str(i)+".jpg"),img) for i,img in enumerate(exported_regions) ]
 
             texts = ""
             for img_org in exported_regions:

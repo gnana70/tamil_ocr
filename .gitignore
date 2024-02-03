@@ -166,3 +166,4 @@ test_venv
 test_folder
 gradio_venv
 # *.onnx
+temp_images
