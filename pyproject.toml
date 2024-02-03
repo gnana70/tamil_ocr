@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ocr_tamil"
-version = "0.1.9"
+version = "0.2.0"
 description = "Python Tamil OCR package"
 readme = "README.md"
 authors = [{ name = "Gnana Prasath", email = "gnana70@gmail.com" }]
@@ -19,8 +19,8 @@ classifiers = [
 ]
 keywords = ["ocr", "ocr tamil", "tamil", "indian ocr", "tamil ocr"]
 dependencies = [
-    "torch==2.1.2",
-    "torchvision==0.16.2",
+    "torch>=2",
+    "torchvision>=0.15.1",
     "Pillow>=10.0.0",
     "opencv-python",
     "Open-Tamil",
@@ -43,4 +43,4 @@ dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
 Homepage = "https://github.com/gnana70/tamil_ocr"
 
 [project.scripts]
-tamil_ocr = "tamil_ocr.tamil_ocr:main"
+ocr_tamil = "tamil_ocr.ocr_tamil:main"

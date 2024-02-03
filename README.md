@@ -118,10 +118,9 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 >>>> கொடைக்கானல் Kodaikanal 
 
+```
 
 **Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
-
-```
 
 ## Applications
 1. Navigating autonomous vehicles based on the signboards
