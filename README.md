@@ -30,6 +30,7 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
  Input Image                                                                |  OCR TAMIL            | Tesseract         | 
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/4.jpg">                   | வாழ்கவளமுடன்     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌    | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/11.jpg">                   | தமிழ்வாழ்க      | **NO OUTPUT**             | 
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ்          |**NO OUTPUT**      | 
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/2.jpg">                   | கோபி               | **NO OUTPUT**            | 
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம்            | **NO OUTPUT** | 
