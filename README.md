@@ -1,4 +1,6 @@
-# OCR Tamil - Easy, Accurate and Simple to use Tamil OCR
+<h1 align="center"> OCR Tamil - Easy, Accurate and Simple to use Tamil OCR   ஒளி எழுத்துணரி</h1>
+
+<p align="center">❤️️❤️️Please star✨ it if you like❤️️❤️️</p>
 
 <p align="center">
   <a href="LICENSE">
@@ -25,31 +27,31 @@
 
 Currently supports two languages (English + Tamil). Accuracy of the model can be improved by adjusting the Text detection model as per your requirements. Achieved the accuracy of around **>95%** (98% NED) in validation set
 
-## Comparison between Tesseract OCR and OCR Tamil
+## Comparison between Tesseract OCR and OCR Tamil ⚖️
 
  Input Image                                                                |  OCR TAMIL            | Tesseract         | 
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/4.jpg">                   | வாழ்கவளமுடன்     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌    | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/11.jpg">                   | தமிழ்வாழ்க      | **NO OUTPUT**             | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ்          |**NO OUTPUT**      | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/2.jpg">                   | கோபி               | **NO OUTPUT**            | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம்            | **NO OUTPUT** | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத்      | **NO OUTPUT**             |
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/5.jpg">                   | அண்ணாசாலை      | **NO OUTPUT**             |  
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/4.jpg">                   | வாழ்கவளமுடன்✅     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌ ❌  | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/11.jpg">                   | தமிழ்வாழ்க✅      | **NO OUTPUT** ❌           | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ் ✅         |**NO OUTPUT** ❌     | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/2.jpg">                   | கோபி ✅              | **NO OUTPUT** ❌          | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம் ✅           | **NO OUTPUT** ❌ | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத் ✅      | **NO OUTPUT** ❌             |
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/5.jpg">                   | அண்ணாசாலை ✅     | **NO OUTPUT** ❌            |  
 
 **Obtained Tesseract results using the [huggingface space](https://huggingface.co/spaces/kneelesh48/Tesseract-OCR) with Tamil as language**
 
-## How to Install and Use OCR Tamil 
+## How to Install and Use OCR Tamil 👨🏼‍💻
 
-### Quick links
-1. Detailed explanation on [Medium article](https://gnana70.medium.com/ocr-tamil-easy-accurate-and-simple-to-use-tamil-ocr-b03b98697f7b). 
+### Quick links🌐
+📔 Detailed explanation on [Medium article](https://gnana70.medium.com/ocr-tamil-easy-accurate-and-simple-to-use-tamil-ocr-b03b98697f7b). 
 
-2. [Colab notebook](https://colab.research.google.com/drive/11QPPj3EmpoIqnpuIznKeP1icxvVOjfux?usp=sharing)
+✍️ Experiment in [Colab notebook](https://colab.research.google.com/drive/11QPPj3EmpoIqnpuIznKeP1icxvVOjfux?usp=sharing)
 
-3. [Huggingface spaces🤗](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
+🤗 Test it in [Huggingface spaces](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
 
 
-### Pip
+### Pip 🐍
 1. Using PIP install 
 ```pip install ocr_tamil```
 2. Use the below code for text recognition at word level by inserting the image_path
@@ -85,7 +87,7 @@ with open("output.txt","w",encoding="utf-8") as f:
 <img width="400" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/0.jpg">
 
 
-### Github
+### Github 💻
 1. Clone the repository
 2. Pip install the required modules using ```pip install -r requirements.txt```
 3. Run the below code by providing the image path 
@@ -122,11 +124,11 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 **Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
 
-## Applications
+## Applications⚡
 1. Navigating autonomous vehicles based on the signboards
 2. License plate recognition
 
-## Limitations
+## Limitations⛔
 
 1. Unable to read the text if they are present in rotated forms
 
@@ -154,7 +156,7 @@ Character **இ** missing due to text detection model error
 **?**யற்கை மூலிகைகளில் இருந்து ஈர்த்தெடுக்கக்கப்பட்ட விரிய உட்பொருட்களை உள்ளடக்கி எந்த இரசாயன சேர்க்கைகளும் **?**ல்லாமல் உருவாக்கப்பட்ட **?**ந்தியாவின் முதல் சித்த தயாரிப்பு 
 
 
-## Acknowledgements
+## Acknowledgements 👏
 
 **Text detection** - [CRAFT TEXT DECTECTION](https://github.com/clovaai/CRAFT-pytorch)
 
