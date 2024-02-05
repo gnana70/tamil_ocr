@@ -1,5 +1,7 @@
 # OCR Tamil - Easy, Accurate and Simple to use Tamil OCR
 
+❤️️❤️️Please star✨ it if you like❤️️❤️️
+
 <p align="center">
   <a href="LICENSE">
     <img src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/MIT.svg" alt="LICENSE">
@@ -29,24 +31,24 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 
  Input Image                                                                |  OCR TAMIL            | Tesseract         | 
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/4.jpg">                   | வாழ்கவளமுடன்     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌    | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/11.jpg">                   | தமிழ்வாழ்க      | **NO OUTPUT**             | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ்          |**NO OUTPUT**      | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/2.jpg">                   | கோபி               | **NO OUTPUT**            | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம்            | **NO OUTPUT** | 
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத்      | **NO OUTPUT**             |
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/5.jpg">                   | அண்ணாசாலை      | **NO OUTPUT**             |  
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/4.jpg">                   | வாழ்கவளமுடன்✅     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌ ❌  | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/11.jpg">                   | தமிழ்வாழ்க✅      | **NO OUTPUT** ❌           | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ் ✅         |**NO OUTPUT** ❌     | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/2.jpg">                   | கோபி ✅              | **NO OUTPUT** ❌          | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம் ✅           | **NO OUTPUT** ❌ | 
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத் ✅      | **NO OUTPUT** ❌             |
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/5.jpg">                   | அண்ணாசாலை ✅     | **NO OUTPUT** ❌            |  
 
 **Obtained Tesseract results using the [huggingface space](https://huggingface.co/spaces/kneelesh48/Tesseract-OCR) with Tamil as language**
 
-## How to Install and Use OCR Tamil 
+## How to Install and Use OCR Tamil ⌛
 
 ### Quick links
-1. Detailed explanation on [Medium article](https://gnana70.medium.com/ocr-tamil-easy-accurate-and-simple-to-use-tamil-ocr-b03b98697f7b). 
+📝 Detailed explanation on [Medium article](https://gnana70.medium.com/ocr-tamil-easy-accurate-and-simple-to-use-tamil-ocr-b03b98697f7b). 
 
-2. [Colab notebook](https://colab.research.google.com/drive/11QPPj3EmpoIqnpuIznKeP1icxvVOjfux?usp=sharing)
+🔠 [Colab notebook](https://colab.research.google.com/drive/11QPPj3EmpoIqnpuIznKeP1icxvVOjfux?usp=sharing)
 
-3. [Huggingface spaces🤗](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
+🤗 [Huggingface spaces](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
 
 
 ### Pip
