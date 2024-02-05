@@ -1,4 +1,4 @@
-<h1 align="center"># OCR Tamil - Easy, Accurate and Simple to use Tamil OCR - ஒளி எழுத்துணரி</h1>
+<h1 align="center"> OCR Tamil - Easy, Accurate and Simple to use Tamil OCR - ஒளி எழுத்துணரி</h1>
 
 <p align="center">❤️️❤️️Please star✨ it if you like❤️️❤️️</p>
 
