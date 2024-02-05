@@ -1,6 +1,6 @@
-# OCR Tamil - Easy, Accurate and Simple to use Tamil OCR
+<p align="center"># OCR Tamil - Easy, Accurate and Simple to use Tamil OCR - ஒளி எழுத்துணரி</p>
 
-❤️️❤️️Please star✨ it if you like❤️️❤️️
+<p align="center">❤️️❤️️Please star✨ it if you like❤️️❤️️</p>
 
 <p align="center">
   <a href="LICENSE">
@@ -44,11 +44,11 @@ Currently supports two languages (English + Tamil). Accuracy of the model can be
 ## How to Install and Use OCR Tamil ⌛
 
 ### Quick links
-📝 Detailed explanation on [Medium article](https://gnana70.medium.com/ocr-tamil-easy-accurate-and-simple-to-use-tamil-ocr-b03b98697f7b). 
+📔 Detailed explanation on [Medium article](https://gnana70.medium.com/ocr-tamil-easy-accurate-and-simple-to-use-tamil-ocr-b03b98697f7b). 
 
-🔠 [Colab notebook](https://colab.research.google.com/drive/11QPPj3EmpoIqnpuIznKeP1icxvVOjfux?usp=sharing)
+✍️ Experiment in [Colab notebook](https://colab.research.google.com/drive/11QPPj3EmpoIqnpuIznKeP1icxvVOjfux?usp=sharing)
 
-🤗 [Huggingface spaces](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
+🤗 Test it in [Huggingface spaces](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
 
 
 ### Pip
@@ -124,11 +124,11 @@ with open("output.txt","w",encoding="utf-8") as f:
 
 **Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
 
-## Applications
+## Applications⚡
 1. Navigating autonomous vehicles based on the signboards
 2. License plate recognition
 
-## Limitations
+## Limitations⛔
 
 1. Unable to read the text if they are present in rotated forms
 
