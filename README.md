@@ -1,4 +1,4 @@
-<h1 align="center"> OCR Tamil - Easy, Accurate and Simple to use Tamil OCR   ஒளி எழுத்துணரி</h1>
+<h1 align="center"> OCR Tamil - Easy, Accurate and Simple to use Tamil OCR - (ஒளி எழுத்துணரி)</h1>
 
 <p align="center">❤️️❤️️Please star✨ it if you like❤️️❤️️</p>
 
@@ -25,11 +25,19 @@
 
  OCR Tamil can help you extract text from signboard, nameplates, storefronts etc., from Natural Scenes with high accuracy. This version of OCR is much more robust to tilted text compared to the Tesseract, Paddle OCR and Easy OCR as they are primarily built to work on the documents texts and not on natural scenes. This model is work in progress, feel free to contribute!!!
 
-Currently supports two languages (English + Tamil). Accuracy of the model can be improved by adjusting the Text detection model as per your requirements. Achieved the accuracy of around **>95%** (98% NED) in validation set
+## Languages Supported 🔛
+**➡️ English**
+
+**➡️ Tamil (தமிழ்)**
+
+## Accuracy 🎯
+✔️ English > 98%
+
+✔️ Tamil > 95%
 
 ## Comparison between Tesseract OCR and OCR Tamil ⚖️
 
- Input Image                                                                |  OCR TAMIL            | Tesseract         | 
+ Input Image                                                                |  OCR TAMIL   🏆         | Tesseract         | 
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/4.jpg">                   | வாழ்கவளமுடன்✅     |    க்‌ க்கஸாரகளள௮ஊகஎளமுடன்‌ ❌  | 
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/11.jpg">                   | தமிழ்வாழ்க✅      | **NO OUTPUT** ❌           | 
@@ -125,8 +133,8 @@ with open("output.txt","w",encoding="utf-8") as f:
 **Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
 
 ## Applications⚡
-1. Navigating autonomous vehicles based on the signboards
-2. License plate recognition
+1. ADAS system navigation based on the signboards + maps (hybrid approach) 🚁
+2. License plate recognition 🚘
 
 ## Limitations⛔
 
@@ -153,7 +161,7 @@ with open("output.txt","w",encoding="utf-8") as f:
 Character **இ** missing due to text detection model error 
 </p>
 
-**?**யற்கை மூலிகைகளில் இருந்து ஈர்த்தெடுக்கக்கப்பட்ட விரிய உட்பொருட்களை உள்ளடக்கி எந்த இரசாயன சேர்க்கைகளும் **?**ல்லாமல் உருவாக்கப்பட்ட **?**ந்தியாவின் முதல் சித்த தயாரிப்பு 
+**?**யற்கை மூலிகைகளில் இருந்து ஈர்த்தெடுக்கக்கப்பட்ட வீரிய உட்பொருட்களை உள்ளடக்கி எந்த இரசாயன சேர்க்கைகளும் இல்லாமல் உருவாக்கப்பட்ட இந்தியாவின் முதல் சித்த தயாரிப்பு 
 
 
 ## Acknowledgements 👏
@@ -188,7 +196,7 @@ Character **இ** missing due to text detection model error
 }
 ```
 
-## CITATION
+## Citation
 
 ```bibtex
 @InProceedings{GnanaPrasath,

@@ -93,7 +93,8 @@ class OCR:
                  tamil_model_path=None,
                  eng_model_path=None,
                  detect_model_path=None,
-                 enable_cuda=True) -> None:
+                 enable_cuda=True,
+                 batch_size=8) -> None:
 
         if enable_cuda:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -104,6 +105,7 @@ class OCR:
         self.output_dir = "temp_images"
 
         self.detect = detect
+        self.batch_size = batch_size
         
 
         tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil.pt"
@@ -155,8 +157,9 @@ class OCR:
         self.eng_parseq = self.initialize_onnx_model(self.eng_model_path)
         self.eng_tokenizer = Tokenizer(self.eng_character_set)
 
-        # self.temp_model = load_from_checkpoint("ocr_tamil\model_weights\parseq_tamil.ckpt").to(self.device).eval()
-        # torch.save(self.temp_model,"ocr_tamil\model_weights\parseq_tamil.pt")
+        # self.temp_model = load_from_checkpoint("ocr_tamil\model_weights\parseq.ckpt").to(self.device).eval()
+        # torch.save(self.temp_model,"ocr_tamil\model_weights\parseq_tamil_rotate.pt")
+        # self.tamil_parseq = torch.load("ocr_tamil\model_weights\parseq_tamil_rotate.pt").to(self.device).eval()
 
     def to_numpy(self,tensor):
         return tensor.cpu().numpy()
@@ -194,7 +197,7 @@ class OCR:
         return contours_sorted
         
 
-    def craft_detect(self,image,text_threshold=0.7,link_threshold=0.25,low_text=0.30,**kwargs):
+    def craft_detect(self,image,text_threshold=0.5,link_threshold=0.1,low_text=0.30,**kwargs):
         size = max(image.shape[0],image.shape[1],640)
 
         # Reshaping to the nearest size
@@ -286,7 +289,7 @@ class OCR:
         return eng_preds, eng_confidence
     
     def text_recognize(self,img_org):
-        # image = self.read_image_input(image)
+
         img_org = skimage.exposure.rescale_intensity(img_org, in_range='image', out_range='dtype')
         img_org = Image.fromarray(np.uint8(img_org)).convert('RGB')
         img = self.img_transform(img_org.convert('RGB')).unsqueeze(0)
