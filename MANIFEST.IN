@@ -1,0 +1,4 @@
+include ocr_tamil/configs/charset/*.yaml
+include ocr_tamil/configs/experiment/*.yaml
+include ocr_tamil/configs/model/*.yaml
+include ocr_tamil/configs/*.yaml

@@ -168,3 +168,13 @@ test_folder
 gradio_venv
 # *.onnx
 temp_images
+
+# added below for pip package
+# test_images
+# *.egg-info
+# gradio
+# miscellenous
+# *.pth
+# *.onnx
+# *.pt
+# *.ckpt
