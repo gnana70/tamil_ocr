@@ -59,59 +59,60 @@
 🤗 Test it in [Huggingface spaces](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
 
 
-### Pip 🐍
-1. Using PIP install 
-```pip install ocr_tamil```
-2. Use the below code for text recognition at word level by inserting the image_path
+### Pip install instructions🐍
+In your command line, run the following command ```pip install ocr_tamil```
 
-**Text Recognition**
-```python
-from ocr_tamil.ocr import OCR
-image_path = r"test_images\1.jpg" # insert your own path here (step 2 file location)
-ocr = OCR()
-texts = ocr.predict(image_path)
-with open("output.txt","w",encoding="utf-8") as f:
-    f.write(texts)
->>>> நெடுஞ்சாலைத்
-```
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1_180.jpg">
+If you are using jupyter notebook , install like ```!pip install ocr_tamil```
 
+### Python Usage - Single image inference
 
-**Text Detect + Recognition**
-
-4. Use the below code for text detection and recognition by inserting the image_path
-
-```python
-from ocr_tamil.ocr import OCR
-image_path = r"test_images\0.jpg" # insert your own path here
-ocr = OCR(detect=True)
-texts = ocr.predict(image_path)
-with open("output.txt","w",encoding="utf-8") as f:
-    f.write(texts)
-
->>>> கொடைக்கானல் Kodaikanal 
-
-```
-<img width="400" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/0.jpg">
-
-
-### Github 💻
-1. Clone the repository
-2. Pip install the required modules using ```pip install -r requirements.txt```
-3. Run the below code by providing the image path 
-
-**Text Recognition**
+**Text Recognition only**
 
 ```python
 from ocr_tamil.ocr import OCR
 
 image_path = r"test_images\1.jpg" # insert your own path here
 ocr = OCR()
-texts = ocr.predict(image_path)
-with open("output.txt","w",encoding="utf-8") as f:
-    f.write(texts)
+text_list = ocr.predict(image_path)
+print(text_list[0])
 
->>>> நெடுஞ்சாலைத்
+## OUTPUT : நெடுஞ்சாலைத்
+```
+<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1_180.jpg">
+
+
+**Text Detect + Recognition**
+
+```python
+from ocr_tamil.ocr import OCR
+
+image_path = r"test_images\0.jpg" # insert your own image path here
+ocr = OCR(detect=True)
+texts = ocr.predict(image_path)
+print(text_list[0])
+
+## OUTPUT : கொடைக்கானல் Kodaikanal 
+
+```
+<img width="400" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/0.jpg">
+
+
+### Batch inference mode 💻
+
+**Text Recognition only**
+
+```python
+from ocr_tamil.ocr import OCR
+
+image_path = [r"test_images\1.jpg",r"test_images\2.jpg"] # insert your own image paths here
+ocr = OCR()
+text_list = ocr.predict(image_path)
+
+for text in text_list:
+    print(text)
+
+## OUTPUT : நெடுஞ்சாலைத்
+## OUTPUT : கோபி
 
 ```
 
@@ -120,13 +121,15 @@ with open("output.txt","w",encoding="utf-8") as f:
 ```python
 from ocr_tamil.ocr import OCR
 
-image_path = r"test_images\0.jpg" # insert your own path here
+image_path = [r"test_images\0.jpg",r"test_images\tamil_sentence.jpg"] # insert your own image paths here
 ocr = OCR(detect=True)
-texts = ocr.predict(image_path)
-with open("output.txt","w",encoding="utf-8") as f:
-    f.write(texts)
+text_list = ocr.predict(image_path)
 
->>>> கொடைக்கானல் Kodaikanal 
+for text in text_list:
+    print(text)
+
+## OUTPUT : கொடைக்கானல் Kodaikanal 
+## OUTPUT : செரியர் யற்கை மூலிகைகளில் இருந்து ஈர்த்தெடுக்க்கப்பட்ட வீரிய உட்பொருட்களை உள்ளடக்கி எந்த இரசாயன சேர்க்கைகளும் இல்லாமல் உருவாக்கப்பட்ட இந்தியாவின் முதல் சித்த தயாரிப்பு 
 
 ```
 
