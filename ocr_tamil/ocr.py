@@ -53,6 +53,25 @@ id_to_tamil_character = {v:k for k,v in tamil_character_to_id.items()}
 
 import os
 import requests
+from torch.utils.data import Dataset, DataLoader
+
+class ParseqDataset(Dataset):
+    def __init__(self, data, transform=None):
+        self.data = data
+        self.transform = transform
+        
+    def __getitem__(self, index):
+        x = self.data[index]
+        x = skimage.exposure.rescale_intensity(x, in_range='image', out_range='dtype')
+        x = Image.fromarray(np.uint8(x)).convert('RGB')
+        
+        if self.transform:
+            x = self.transform(x)
+        
+        return x
+    
+    def __len__(self):
+        return len(self.data)
 
 
 def download(url: str, dest_folder: str):
@@ -101,15 +120,14 @@ class OCR:
         else:
             self.device = torch.device('cpu')
         # print(enable_cuda)
-        print('Device:', self.device)
+        # print('Device:', self.device)
         self.output_dir = "temp_images"
 
         self.detect = detect
         self.batch_size = batch_size
         
-
         tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil.pt"
-        eng_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_eng.onnx"
+        # eng_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_eng.onnx"
         detect_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/craft_mlt_25k.pth"
         
         model_save_location = os.path.join(Path.home(),".model_weights")
@@ -122,9 +140,9 @@ class OCR:
             download(tamil_file_url,model_save_location)
             self.tamil_model_path = os.path.join(model_save_location,"parseq_tamil.pt")
 
-        if tamil_model_path is None:
-            download(eng_file_url,model_save_location)
-            self.eng_model_path = os.path.join(model_save_location,"parseq_eng.onnx")
+        # if tamil_model_path is None:
+        #     download(eng_file_url,model_save_location)
+        #     self.eng_model_path = os.path.join(model_save_location,"parseq_eng.onnx")
 
         if detect_model_path is None:
             download(detect_file_url,model_save_location)
@@ -140,36 +158,35 @@ class OCR:
                 self.gpu=False
                 self.craft_net = load_craftnet_model(cuda=False,weight_path=self.detect_model_path)
 
-    def get_transform(self,img_size):
+    def get_transform(self):
         transforms = []
         transforms.extend([
-            T.Resize(img_size, T.InterpolationMode.BICUBIC),
+            T.Resize([ 32, 128 ], T.InterpolationMode.BICUBIC),
             T.ToTensor(),
             T.Normalize(0.5, 0.5)
         ])
         return T.Compose(transforms)
 
     def load_model(self):
-        self.tamil_parseq = torch.load(self.tamil_model_path).to(self.device).eval()
-        self.img_transform = self.get_transform(self.tamil_parseq.hparams.img_size)
+        self.tamil_parseq = torch.load(self.tamil_model_path).eval().to(self.device)
+        self.img_transform = self.get_transform()
         self.eng_character_set = """0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"""
-        # self.eng_model_path = r"ocr_tamil\model_weights\parseq_eng.onnx"
-        self.eng_parseq = self.initialize_onnx_model(self.eng_model_path)
         self.eng_tokenizer = Tokenizer(self.eng_character_set)
+        self.eng_parseq = load_from_checkpoint("pretrained=parseq").eval().to(self.device)
 
-        # self.temp_model = load_from_checkpoint("ocr_tamil\model_weights\parseq.ckpt").to(self.device).eval()
+        # self.eng_parseq_test = torch.load("ocr_tamil\model_weights\parseq.pt").eval().to(self.device)
         # torch.save(self.temp_model,"ocr_tamil\model_weights\parseq_tamil_rotate.pt")
         # self.tamil_parseq = torch.load("ocr_tamil\model_weights\parseq_tamil_rotate.pt").to(self.device).eval()
 
-    def to_numpy(self,tensor):
-        return tensor.cpu().numpy()
+    # def to_numpy(self,tensor):
+    #     return tensor.cpu().numpy()
 
-    def initialize_onnx_model(self,model_file):
-        # transform = self.get_transform(self.img_size)
-        onnx_model = onnx.load(model_file)
-        onnx.checker.check_model(onnx_model)
-        ort_session = rt.InferenceSession(model_file)
-        return ort_session 
+    # def initialize_onnx_model(self,model_file):
+    #     # transform = self.get_transform(self.img_size)
+    #     onnx_model = onnx.load(model_file)
+    #     onnx.checker.check_model(onnx_model)
+    #     ort_session = rt.InferenceSession(model_file)
+    #     return ort_session 
 
 
     def sort_bboxes(self,contours):
@@ -280,13 +297,13 @@ class OCR:
 
         return img
     
-    def read_english(self,img_org):
-        img_org = img_org.to("cpu")
-        ort_inputs = {self.eng_parseq.get_inputs()[0].name: self.to_numpy(img_org)}
-        logits = self.eng_parseq.run(None, ort_inputs)[0]
-        probs = torch.tensor(logits).softmax(-1)
-        eng_preds, eng_confidence = self.eng_tokenizer.decode(probs)
-        return eng_preds, eng_confidence
+    # def read_english(self,img_org):
+    #     img_org = img_org.to("cpu")
+    #     ort_inputs = {self.eng_parseq.get_inputs()[0].name: self.to_numpy(img_org)}
+    #     logits = self.eng_parseq.run(None, ort_inputs)[0]
+    #     probs = torch.tensor(logits).softmax(-1)
+    #     eng_preds, eng_confidence = self.eng_tokenizer.decode(probs)
+    #     return eng_preds, eng_confidence
     
     def text_recognize(self,img_org):
 
@@ -313,6 +330,61 @@ class OCR:
             label = eng_label[0]
 
         return label
+    
+    # def read_english_batch(self,data):
+    #     data = data.to("cpu")
+    #     ort_inputs = {}
+    #     for img_org in data:
+    #         ort_inputs[self.eng_parseq.get_inputs()[0].name] = self.to_numpy(img_org)
+
+    #     logits = self.eng_parseq.run(None, ort_inputs)
+    #     probs = torch.tensor(logits).softmax(-1)
+    #     eng_preds, eng_confidence = self.eng_tokenizer.decode(probs)
+    #     return eng_preds, eng_confidence
+    
+    def text_recognize_batch(self,exported_regions):
+
+        dataset = ParseqDataset(exported_regions, transform=self.img_transform)
+        dataloader = DataLoader(dataset, batch_size=self.batch_size)
+
+        tamil_label_list = []
+        tamil_confidence_list = []
+        eng_label_list = []
+        eng_confidence_list = []
+
+        with torch.inference_mode():
+            for data in dataloader:
+                data = data.to(self.device)
+
+                
+                logits = self.tamil_parseq(data)
+                # Greedy decoding
+                pred = logits.softmax(-1)
+                label, confidence = self.tamil_parseq.tokenizer.decode(pred)
+                tamil_label_list.extend(label)
+                tamil_confidence_list.extend(confidence)
+
+                # english prediction
+                # eng_preds, eng_confidence = self.read_english_batch(data)
+                logits = self.eng_parseq(data)
+                # Greedy decoding
+                pred = logits.softmax(-1)
+                eng_preds, eng_confidence = self.eng_tokenizer.decode(pred)
+                eng_label_list.extend(eng_preds)
+                eng_confidence_list.extend(eng_confidence)
+
+        texts = ""
+        for t_l,t_c,e_l,e_c in zip(tamil_label_list,tamil_confidence_list,eng_label_list,eng_confidence_list):
+            tamil_conf = torch.mean(t_c)
+            eng_conf = torch.mean(e_c)
+
+            if tamil_conf >= eng_conf:
+                t_l = self.decode_file_name(t_l,id_to_tamil_character)
+                texts += t_l + " "
+            else:
+                texts += e_l + " "
+
+        return texts
 
     def text_detect(self,image,**kwargs):
         # image = self.read_image_input(image)
@@ -320,23 +392,32 @@ class OCR:
 
         return exported_regions
     
-    def predict(self,image,save_image=False):
-        image = self.read_image_input(image)
+    def predict(self,image):
 
-        if self.detect:
-            exported_regions = self.text_detect(image)
-            # if save_image:
-            #     [cv2.imwrite(os.path.join("temp_images",str(i)+".jpg"),img) for i,img in enumerate(exported_regions) ]
+        # To handle multiple images
+        if isinstance(image,list):
+            text_list = []
+            if self.detect:
+                for img in image:
+                    temp = self.read_image_input(img)
+                    exported_regions = self.text_detect(temp)
+                    texts = self.text_recognize_batch(exported_regions)
+                    text_list.append(texts)
+            else:
+                image_list = [self.read_image_input(img) for img in image]
+                texts = self.text_recognize_batch(image_list)
+                text_list = texts.split(" ")
 
-            texts = ""
-            for img_org in exported_regions:
-                label = self.text_recognize(img_org)
-                texts += label + " "
-
+        # Single image handling
         else:
-            texts = self.text_recognize(image)
+            image = self.read_image_input(image)
+            if self.detect:
+                exported_regions = self.text_detect(image)
+                text_list = [self.text_recognize_batch(exported_regions)]
+            else:
+                text_list = [self.text_recognize_batch([image])]
 
-        return texts
+        return text_list
     
 if __name__ == "__main__":
     image_path = r"test_images\6.jpg"
