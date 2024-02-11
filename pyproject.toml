@@ -1,13 +1,13 @@
 [build-system]
 requires = [
-"setuptools>=42",
+"setuptools>=60",
 "wheel"
 ]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "ocr_tamil"
-version = "0.2.1"
+version = "0.2.5"
 description = "Python Tamil OCR package"
 readme = "README.md"
 authors = [{ name = "Gnana Prasath", email = "gnana70@gmail.com" }]
@@ -36,6 +36,8 @@ dependencies = [
 ]
 requires-python = ">=3.9"
 
+
+
 [project.optional-dependencies]
 dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
 
@@ -44,3 +46,5 @@ Homepage = "https://github.com/gnana70/tamil_ocr"
 
 [project.scripts]
 ocr_tamil = "tamil_ocr.ocr_tamil:main"
+
+
