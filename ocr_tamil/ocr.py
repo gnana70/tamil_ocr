@@ -1,47 +1,28 @@
 # import craft functions
 import sys
 import os
+import requests
 import traceback
+import torch
+import cv2
+import skimage
+import numpy as np
 from tqdm import tqdm
-import onnxruntime as rt
-import onnx
-import yaml
+from PIL import Image
+import pathlib
+from pathlib import Path
+from torch.utils.data import Dataset, DataLoader
+current_path = pathlib.Path(__file__).parent.resolve()
 
-# from ocr_tamil.strhub.data.module import SceneTextDataModule
+# import related to parseq
 from torchvision import transforms as T
-
+from ocr_tamil.strhub.data.utils import Tokenizer
+from ocr_tamil.strhub.models.utils import load_from_checkpoint
 from ocr_tamil.craft_text_detector import (
     load_craftnet_model,
     get_prediction,
     export_detected_regions
 )
-
-import pathlib
-from pathlib import Path
-current_path = pathlib.Path(__file__).parent.resolve()
-# print(current_path)
-
-import torch
-import cv2
-import numpy as np
-
-# import related to parseq
-import re
-from abc import ABC, abstractmethod
-from itertools import groupby
-from typing import List, Optional, Tuple
-
-from torch import Tensor
-from torch.nn.utils.rnn import pad_sequence
-
-from PIL import Image
-
-import matplotlib.pyplot as plt
-
-import skimage
-from ocr_tamil.strhub.data.utils import Tokenizer, BaseTokenizer
-from ocr_tamil.strhub.models.utils import load_from_checkpoint
-
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -50,10 +31,6 @@ tamil_character_to_id = {'ஃ': '0', 'அ': '1', 'ஆ': '2', 'இ': '3', 'ஈ': 
  'ஹை': '294', 'ஹொ': '295', 'ஹோ': '296', 'ஹௌ': '297', 'ஹ்': '298'}
 
 id_to_tamil_character = {v:k for k,v in tamil_character_to_id.items()}
-
-import os
-import requests
-from torch.utils.data import Dataset, DataLoader
 
 class ParseqDataset(Dataset):
     def __init__(self, data, transform=None):
@@ -113,7 +90,11 @@ class OCR:
                  eng_model_path=None,
                  detect_model_path=None,
                  enable_cuda=True,
-                 batch_size=8) -> None:
+                 batch_size=8,
+                 text_threshold=0.5,
+                 link_threshold=0.1,
+                 low_text=0.30,
+                 details=0) -> None:
 
         if enable_cuda:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -136,13 +117,15 @@ class OCR:
         self.eng_model_path = eng_model_path
         self.detect_model_path = detect_model_path
 
+        self.text_threshold = text_threshold
+        self.link_threshold = link_threshold
+        self.low_text = low_text
+
+        self.details = details
+
         if tamil_model_path is None:
             download(tamil_file_url,model_save_location)
             self.tamil_model_path = os.path.join(model_save_location,"parseq_tamil.pt")
-
-        # if tamil_model_path is None:
-        #     download(eng_file_url,model_save_location)
-        #     self.eng_model_path = os.path.join(model_save_location,"parseq_eng.onnx")
 
         if detect_model_path is None:
             download(detect_file_url,model_save_location)
@@ -174,20 +157,10 @@ class OCR:
         self.eng_tokenizer = Tokenizer(self.eng_character_set)
         self.eng_parseq = load_from_checkpoint("pretrained=parseq").eval().to(self.device)
 
+        # self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_tamil.ckpt").eval().to(self.device)
         # self.eng_parseq_test = torch.load("ocr_tamil\model_weights\parseq.pt").eval().to(self.device)
         # torch.save(self.temp_model,"ocr_tamil\model_weights\parseq_tamil_rotate.pt")
         # self.tamil_parseq = torch.load("ocr_tamil\model_weights\parseq_tamil_rotate.pt").to(self.device).eval()
-
-    # def to_numpy(self,tensor):
-    #     return tensor.cpu().numpy()
-
-    # def initialize_onnx_model(self,model_file):
-    #     # transform = self.get_transform(self.img_size)
-    #     onnx_model = onnx.load(model_file)
-    #     onnx.checker.check_model(onnx_model)
-    #     ort_session = rt.InferenceSession(model_file)
-    #     return ort_session 
-
 
     def sort_bboxes(self,contours):
         c = np.array(contours)
@@ -214,7 +187,7 @@ class OCR:
         return contours_sorted
         
 
-    def craft_detect(self,image,text_threshold=0.5,link_threshold=0.1,low_text=0.30,**kwargs):
+    def craft_detect(self,image,**kwargs):
         size = max(image.shape[0],image.shape[1],640)
 
         # Reshaping to the nearest size
@@ -224,9 +197,9 @@ class OCR:
         prediction_result = get_prediction(
             image=image,
             craft_net=self.craft_net,
-            text_threshold=text_threshold,
-            link_threshold=link_threshold,
-            low_text=low_text,
+            text_threshold=self.text_threshold,
+            link_threshold=self.link_threshold,
+            low_text=self.low_text,
             cuda=self.gpu,
             long_size=size,
             poly = False
@@ -267,7 +240,7 @@ class OCR:
 
         torch.cuda.empty_cache()
 
-        return exported_file_paths
+        return exported_file_paths,updated_prediction_result
 
     def decode_file_name(self,decode_text,id_to_tamil_character,special_sep_char="~"):
         individual_ids = decode_text.split(f"{special_sep_char}")
@@ -297,14 +270,6 @@ class OCR:
 
         return img
     
-    # def read_english(self,img_org):
-    #     img_org = img_org.to("cpu")
-    #     ort_inputs = {self.eng_parseq.get_inputs()[0].name: self.to_numpy(img_org)}
-    #     logits = self.eng_parseq.run(None, ort_inputs)[0]
-    #     probs = torch.tensor(logits).softmax(-1)
-    #     eng_preds, eng_confidence = self.eng_tokenizer.decode(probs)
-    #     return eng_preds, eng_confidence
-    
     def text_recognize(self,img_org):
 
         img_org = skimage.exposure.rescale_intensity(img_org, in_range='image', out_range='dtype')
@@ -331,16 +296,6 @@ class OCR:
 
         return label
     
-    # def read_english_batch(self,data):
-    #     data = data.to("cpu")
-    #     ort_inputs = {}
-    #     for img_org in data:
-    #         ort_inputs[self.eng_parseq.get_inputs()[0].name] = self.to_numpy(img_org)
-
-    #     logits = self.eng_parseq.run(None, ort_inputs)
-    #     probs = torch.tensor(logits).softmax(-1)
-    #     eng_preds, eng_confidence = self.eng_tokenizer.decode(probs)
-    #     return eng_preds, eng_confidence
     
     def text_recognize_batch(self,exported_regions):
 
@@ -373,25 +328,48 @@ class OCR:
                 eng_label_list.extend(eng_preds)
                 eng_confidence_list.extend(eng_confidence)
 
-        texts = ""
+        text_list = []
+        conf_list = []
         for t_l,t_c,e_l,e_c in zip(tamil_label_list,tamil_confidence_list,eng_label_list,eng_confidence_list):
             tamil_conf = torch.mean(t_c)
             eng_conf = torch.mean(e_c)
+            
+            tamil_conf = tamil_conf.detach().cpu().numpy().item()
+            eng_conf = eng_conf.detach().cpu().numpy().item()
 
             if tamil_conf >= eng_conf:
                 t_l = self.decode_file_name(t_l,id_to_tamil_character)
-                texts += t_l + " "
+                # texts += t_l + " "
+                text_list.append(t_l)
+                conf_list.append(tamil_conf)
             else:
-                texts += e_l + " "
+                # texts += e_l + " "
+                text_list.append(e_l)
+                conf_list.append(eng_conf)
 
-        return texts
-
-    def text_detect(self,image,**kwargs):
-        # image = self.read_image_input(image)
-        exported_regions = self.craft_detect(image,**kwargs)
-
-        return exported_regions
+        return text_list,conf_list
     
+    def output_formatter(self,text_list,conf_list,updated_prediction_result=None):
+        final_result = []
+
+        if not self.details:
+            for text in text_list:
+                final_result.append(text)
+
+        elif self.details == 1:
+            for text,conf in zip(text_list,conf_list):
+                final_result.append((text,conf))
+
+        elif self.details == 2 and updated_prediction_result is not None:
+            for text,conf,bbox in zip(text_list,conf_list,updated_prediction_result):
+                final_result.append((text,conf,bbox))
+
+        elif self.details == 2 and updated_prediction_result is None:
+            for text,conf in zip(text_list,conf_list):
+                final_result.append((text,conf))
+
+        return final_result
+
     def predict(self,image):
 
         # To handle multiple images
@@ -400,23 +378,33 @@ class OCR:
             if self.detect:
                 for img in image:
                     temp = self.read_image_input(img)
-                    exported_regions = self.text_detect(temp)
-                    texts = self.text_recognize_batch(exported_regions)
-                    text_list.append(texts)
+                    exported_regions,updated_prediction_result = self.craft_detect(temp)
+                    inter_text_list,conf_list = self.text_recognize_batch(exported_regions)
+                    final_result = self.output_formatter(inter_text_list,conf_list,updated_prediction_result)
+                    text_list.append(final_result)
+                    
             else:
                 image_list = [self.read_image_input(img) for img in image]
-                texts = self.text_recognize_batch(image_list)
-                text_list = texts.split(" ")
+                inter_text_list,conf_list = self.text_recognize_batch(image_list)
+                final_result = self.output_formatter(inter_text_list,conf_list)
+                text_list.extend(final_result)
+                # texts = texts.split(" ")
 
         # Single image handling
         else:
             image = self.read_image_input(image)
             if self.detect:
-                exported_regions = self.text_detect(image)
-                text_list = [self.text_recognize_batch(exported_regions)]
+                exported_regions,updated_prediction_result = self.craft_detect(image)
+                inter_text_list,conf_list = self.text_recognize_batch(exported_regions)
+                text_list = [self.output_formatter(inter_text_list,conf_list,updated_prediction_result)]
+                # text_list = text_list[0]
+                # text_list.append(final_result)
             else:
-                text_list = [self.text_recognize_batch([image])]
+                inter_text_list,conf_list = self.text_recognize_batch([image])
+                text_list = self.output_formatter(inter_text_list,conf_list)
+                # text_list.append(final_result)
 
+        # print(text_list)
         return text_list
     
 if __name__ == "__main__":

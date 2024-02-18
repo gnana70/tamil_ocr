@@ -90,7 +90,7 @@ from ocr_tamil.ocr import OCR
 image_path = r"test_images\0.jpg" # insert your own image path here
 ocr = OCR(detect=True)
 texts = ocr.predict(image_path)
-print(text_list[0])
+print(" ".join(text_list[0]))
 
 ## OUTPUT : கொடைக்கானல் Kodaikanal 
 
@@ -126,13 +126,18 @@ image_path = [r"test_images\0.jpg",r"test_images\tamil_sentence.jpg"] # insert y
 ocr = OCR(detect=True)
 text_list = ocr.predict(image_path)
 
-for text in text_list:
-    print(text)
+for item in text_list:
+  print(" ".join(item))
+    
 
 ## OUTPUT : கொடைக்கானல் Kodaikanal 
 ## OUTPUT : செரியர் யற்கை மூலிகைகளில் இருந்து ஈர்த்தெடுக்க்கப்பட்ட வீரிய உட்பொருட்களை உள்ளடக்கி எந்த இரசாயன சேர்க்கைகளும் இல்லாமல் உருவாக்கப்பட்ட இந்தியாவின் முதல் சித்த தயாரிப்பு 
 
 ```
+
+### Advanced usage
+1. If you need to get the confidence information of each text, initialize the OCR(details=1)
+2. If you need to get the confidence and bounding box information of each text, initialize the OCR(details=2)
 
 **Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
 
