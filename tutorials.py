@@ -43,8 +43,7 @@ with open("outputs\output_text_detect_recognize_single_image.txt","w",encoding="
 
 # For multiple image - text detect + text recognize
 image_path = [r"test_images\0.jpg",r"test_images\tamil_sentence.jpg",
-              r"test_images\tamil_sentence_1.png",r"test_images\tamil_handwritten.jpg",
-              r"test_images\tamil_sentence_2.webp"] # insert your own path here
+              r"test_images\tamil_sentence_1.png",r"test_images\tamil_handwritten.jpg"] # insert your own path here
 text_list = ocr.predict(image_path)
 
 print("Multiple text detect recognize",text_list)
