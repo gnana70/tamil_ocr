@@ -45,9 +45,15 @@
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம் ✅           | **NO OUTPUT** ❌ | தாம்பரம❌ |
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத் ✅      | **NO OUTPUT** ❌             |நெடுஞ்சாலைத் ✅      |
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/5.jpg">                   | அண்ணாசாலை ✅     | **NO OUTPUT** ❌            |  ல@I9❌            |
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேடஸ் ❌         |**NO OUTPUT** ❌     | ரெடிமேடஸ் ❌         |
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ் ✅         |**NO OUTPUT** ❌     | ரெடிமேடஸ் ❌         |
 
 **Obtained Tesseract and EasyOCR results using the [Colab notebook](https://colab.research.google.com/drive/1ylZm6afur85Pe6I10N2_tzuBFl2VIxkW?usp=sharing) with Tamil and english as language**
+
+## Handwritten Text (Experimental)
+<img width="500" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/develop/test_images/tamil_handwritten.jpg">
+
+
+**model output: நிமிர்ந்த நன்னடை மேற்கொண்ட பார்வையும் நிலத்தில் யார்க் கும் அஞ்சாத நெறிகளும் திமிர்ந்த ஞானச் செருக்கும் இருப்பதால் செம்மை மாதர் திறம்புவ தில்லையாம் அமிழ்ந்து பேரிஞ் ளாமறி யாமையில் அவல மெய்திக் கலையின் Ca வாழவதை உமிழ்ந்து தள்ளுதல் பெண்ணற மாகுமாம் உதய கன்ன உரைப்பது கேட்டிரோ பாரதியார் ஹேமந்த் பூ** 
 
 
 ## How to Install and Use OCR Tamil 👨🏼‍💻

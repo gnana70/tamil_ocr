@@ -14,6 +14,9 @@ from pathlib import Path
 from torch.utils.data import Dataset, DataLoader
 current_path = pathlib.Path(__file__).parent.resolve()
 
+torch.manual_seed(0)
+np.random.seed(0)
+
 # import related to parseq
 from torchvision import transforms as T
 from ocr_tamil.strhub.data.utils import Tokenizer
@@ -107,7 +110,7 @@ class OCR:
         self.detect = detect
         self.batch_size = batch_size
         
-        tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil.pt"
+        tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil_v1.pt"
         # eng_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_eng.onnx"
         detect_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/craft_mlt_25k.pth"
         
@@ -125,7 +128,7 @@ class OCR:
 
         if tamil_model_path is None:
             download(tamil_file_url,model_save_location)
-            self.tamil_model_path = os.path.join(model_save_location,"parseq_tamil.pt")
+            self.tamil_model_path = os.path.join(model_save_location,"parseq_tamil_v1.pt")
 
         if detect_model_path is None:
             download(detect_file_url,model_save_location)
@@ -151,15 +154,22 @@ class OCR:
         return T.Compose(transforms)
 
     def load_model(self):
-        self.tamil_parseq = torch.load(self.tamil_model_path).eval().to(self.device)
+        
         self.img_transform = self.get_transform()
         self.eng_character_set = """0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"""
         self.eng_tokenizer = Tokenizer(self.eng_character_set)
         self.eng_parseq = load_from_checkpoint("pretrained=parseq").eval().to(self.device)
+        self.tamil_parseq = torch.load(self.tamil_model_path).eval().to(self.device)
 
-        # self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_tamil.ckpt").eval().to(self.device)
+        # self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_synthtext.ckpt")
+        # self.tamil_parseq.hparams['decode_ar'] = False   
+        # self.tamil_parseq.hparams['refine_iters'] = 1
+        # self.tamil_parseq.to(self.device).eval()
+        # save_path = "ocr_tamil\model_weights\parseq_tamil_v1.pt"
+        # torch.save(self.tamil_parseq,save_path)
+        # self.tamil_parseq = torch.load(save_path).eval().to(self.device)
         # self.eng_parseq_test = torch.load("ocr_tamil\model_weights\parseq.pt").eval().to(self.device)
-        # torch.save(self.temp_model,"ocr_tamil\model_weights\parseq_tamil_rotate.pt")
+        
         # self.tamil_parseq = torch.load("ocr_tamil\model_weights\parseq_tamil_rotate.pt").to(self.device).eval()
 
     def sort_bboxes(self,contours):
