@@ -157,9 +157,10 @@ class OCR:
         self.eng_tokenizer = Tokenizer(self.eng_character_set)
         self.eng_parseq = load_from_checkpoint("pretrained=parseq").eval().to(self.device)
 
-        # self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_tamil.ckpt").eval().to(self.device)
+        self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_synthtext.ckpt").eval().to(self.device)
+        torch.save(self.tamil_parseq,"ocr_tamil\model_weights\parseq_synthtext.pt")
         # self.eng_parseq_test = torch.load("ocr_tamil\model_weights\parseq.pt").eval().to(self.device)
-        # torch.save(self.temp_model,"ocr_tamil\model_weights\parseq_tamil_rotate.pt")
+        
         # self.tamil_parseq = torch.load("ocr_tamil\model_weights\parseq_tamil_rotate.pt").to(self.device).eval()
 
     def sort_bboxes(self,contours):
