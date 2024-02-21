@@ -45,7 +45,7 @@
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/6.jpg">                   | தாம்பரம் ✅           | **NO OUTPUT** ❌ | தாம்பரம❌ |
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/1.jpg">                   | நெடுஞ்சாலைத் ✅      | **NO OUTPUT** ❌             |நெடுஞ்சாலைத் ✅      |
 | <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/5.jpg">                   | அண்ணாசாலை ✅     | **NO OUTPUT** ❌            |  ல@I9❌            |
-| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேடஸ் ✅         |**NO OUTPUT** ❌     | ரெடிமேடஸ் ❌         |
+| <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/10.jpg">                  | ரெடிமேட்ஸ் ✅         |**NO OUTPUT** ❌     | ரெடிமேடஸ் ❌         |
 
 **Obtained Tesseract and EasyOCR results using the [Colab notebook](https://colab.research.google.com/drive/1ylZm6afur85Pe6I10N2_tzuBFl2VIxkW?usp=sharing) with Tamil and english as language**
 
