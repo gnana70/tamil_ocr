@@ -35,7 +35,7 @@
 
 ✔️ Tamil > 95%
 
-## Comparison between Tesseract OCR and OCR Tamil ⚖️
+## Comparison between Tesseract OCR, EasyOCR and OCR Tamil ⚖️
 
  Input Image                                                                |  OCR TAMIL   🏆         | Tesseract         | EasyOCR |
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|:-----------------:|
