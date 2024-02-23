@@ -141,7 +141,7 @@ for item in text_list:
 
 ```
 
-### Advanced usage
+### Advanced usage🚀
 
 OCR module can be initialized by setting following parameters as per your requirements
 
