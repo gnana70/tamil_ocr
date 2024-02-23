@@ -35,7 +35,7 @@
 
 ✔️ Tamil > 95%
 
-## Comparison between Tesseract OCR and OCR Tamil ⚖️
+## Comparison between Tesseract OCR, EasyOCR and OCR Tamil ⚖️
 
  Input Image                                                                |  OCR TAMIL   🏆         | Tesseract         | EasyOCR |
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|:-----------------:|
@@ -49,11 +49,11 @@
 
 **Obtained Tesseract and EasyOCR results using the [Colab notebook](https://colab.research.google.com/drive/1ylZm6afur85Pe6I10N2_tzuBFl2VIxkW?usp=sharing) with Tamil and english as language**
 
-## Handwritten Text (Experimental)
+## Handwritten Text (Experimental)🧪
 <img width="500" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/develop/test_images/tamil_handwritten.jpg">
 
 
-**model output: நிமிர்ந்த நன்னடை மேற்கொண்ட பார்வையும் நிலத்தில் யார்க் கும் அஞ்சாத நெறிகளும் திமிர்ந்த ஞானச் செருக்கும் இருப்பதால் செம்மை மாதர் திறம்புவ தில்லையாம் அமிழ்ந்து பேரிஞ் ளாமறி யாமையில் அவல மெய்திக் கலையின் Ca வாழவதை உமிழ்ந்து தள்ளுதல் பெண்ணற மாகுமாம் உதய கன்ன உரைப்பது கேட்டிரோ பாரதியார் ஹேமந்த் பூ** 
+MODEL OUTPUT: *நிமிர்ந்த நன்னடை மேற்கொண்ட பார்வையும் நிலத்தில் யார்க் கும் அஞ்சாத நெறிகளும் திமிர்ந்த ஞானச் செருக்கும் இருப்பதால் செம்மை மாதர் திறம்புவ தில்லையாம் அமிழ்ந்து பேரிஞ் ளாமறி யாமையில் அவல மெய்திக் கலையின் Ca வாழவதை உமிழ்ந்து தள்ளுதல் பெண்ணற மாகுமாம் உதய கன்ன உரைப்பது கேட்டிரோ பாரதியார் ஹேமந்த் பூ*
 
 
 ## How to Install and Use OCR Tamil 👨🏼‍💻
@@ -141,9 +141,18 @@ for item in text_list:
 
 ```
 
-### Advanced usage
-1. If you need to get the confidence information of each text, initialize the OCR(details=1)
-2. If you need to get the confidence and bounding box information of each text, initialize the OCR(details=2)
+### Advanced usage🚀
+
+OCR module can be initialized by setting following parameters as per your requirements
+
+```
+1. Confidence of word ->  OCR(details=1)
+2. Bounding Box and Confidence of word -> OCR(detect=True,details=1)
+3. To change the CRAFT Text detection settings -> OCR(detect=True,text_threshold=0.5,
+                                               link_threshold=0.1,
+                                               low_text=0.30)
+4. To increase the Batch size of text recognition -> OCR(batch_size=16) # set as per available memory
+```
 
 **Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
 
