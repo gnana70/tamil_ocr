@@ -97,7 +97,8 @@ class OCR:
                  text_threshold=0.5,
                  link_threshold=0.1,
                  low_text=0.30,
-                 details=0) -> None:
+                 details=0,
+                 lang=["tamil","english"]) -> None:
 
         if enable_cuda:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -106,11 +107,12 @@ class OCR:
         # print(enable_cuda)
         # print('Device:', self.device)
         self.output_dir = "temp_images"
+        self.lang = lang
 
         self.detect = detect
         self.batch_size = batch_size
         
-        tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil_v1.pt"
+        tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil_v2.pt"
         # eng_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_eng.onnx"
         detect_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/craft_mlt_25k.pth"
         
@@ -128,7 +130,7 @@ class OCR:
 
         if tamil_model_path is None:
             download(tamil_file_url,model_save_location)
-            self.tamil_model_path = os.path.join(model_save_location,"parseq_tamil_v1.pt")
+            self.tamil_model_path = os.path.join(model_save_location,"parseq_tamil_v2.pt")
 
         if detect_model_path is None:
             download(detect_file_url,model_save_location)
@@ -161,15 +163,15 @@ class OCR:
         self.eng_parseq = load_from_checkpoint("pretrained=parseq").eval().to(self.device)
         self.tamil_parseq = torch.load(self.tamil_model_path).eval().to(self.device)
 
-        # self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_synthtext.ckpt")
-        # self.tamil_parseq.hparams['decode_ar'] = False   
-        # self.tamil_parseq.hparams['refine_iters'] = 1
+        # self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_tamil_v2.ckpt")
+        # self.tamil_parseq.hparams['decode_ar'] = True   
+        # self.tamil_parseq.hparams['refine_iters'] = 5
         # self.tamil_parseq.to(self.device).eval()
-        # save_path = "ocr_tamil\model_weights\parseq_tamil_v1.pt"
+        # save_path = "ocr_tamil\model_weights\parseq_tamil_v2.pt"
         # torch.save(self.tamil_parseq,save_path)
         # self.tamil_parseq = torch.load(save_path).eval().to(self.device)
+
         # self.eng_parseq_test = torch.load("ocr_tamil\model_weights\parseq.pt").eval().to(self.device)
-        
         # self.tamil_parseq = torch.load("ocr_tamil\model_weights\parseq_tamil_rotate.pt").to(self.device).eval()
 
     def sort_bboxes(self,contours):
@@ -279,34 +281,7 @@ class OCR:
                 img = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
         return img
-    
-    def text_recognize(self,img_org):
-
-        img_org = skimage.exposure.rescale_intensity(img_org, in_range='image', out_range='dtype')
-        img_org = Image.fromarray(np.uint8(img_org)).convert('RGB')
-        img = self.img_transform(img_org.convert('RGB')).unsqueeze(0)
-        img = img.to(self.device)
-    
-        # tamil decode
-        with torch.inference_mode():
-            logits = self.tamil_parseq(img)
-        # Greedy decoding
-        pred = logits.softmax(-1)
-        label, confidence = self.tamil_parseq.tokenizer.decode(pred)
-        label = self.decode_file_name(label[0],id_to_tamil_character)
-    
-        # english decode
-        eng_label, eng_confidence = self.read_english(img)
-
-        avg_eng_conf = sum(eng_confidence[0].cpu().detach().numpy())/len(eng_confidence[0].cpu().detach().numpy())
-        avg_tam_conf = sum(confidence[0].cpu().detach().numpy())/len(confidence[0].cpu().detach().numpy())
-    
-        if avg_eng_conf > avg_tam_conf:
-            label = eng_label[0]
-
-        return label
-    
-    
+        
     def text_recognize_batch(self,exported_regions):
 
         dataset = ParseqDataset(exported_regions, transform=self.img_transform)
@@ -321,22 +296,30 @@ class OCR:
             for data in dataloader:
                 data = data.to(self.device)
 
-                
-                logits = self.tamil_parseq(data)
-                # Greedy decoding
-                pred = logits.softmax(-1)
-                label, confidence = self.tamil_parseq.tokenizer.decode(pred)
-                tamil_label_list.extend(label)
-                tamil_confidence_list.extend(confidence)
+                if "tamil" in self.lang:
+                    logits = self.tamil_parseq(data)
+                    # Greedy decoding
+                    pred = logits.softmax(-1)
+                    label, confidence = self.tamil_parseq.tokenizer.decode(pred)
+                    tamil_label_list.extend(label)
+                    tamil_confidence_list.extend(confidence)
+                else:
+                    tamil_label_list.extend(["" for i in range(self.batch_size)])
+                    tamil_confidence_list.extend([torch.tensor(-1.0) for i in range(self.batch_size)])
+
 
                 # english prediction
                 # eng_preds, eng_confidence = self.read_english_batch(data)
-                logits = self.eng_parseq(data)
-                # Greedy decoding
-                pred = logits.softmax(-1)
-                eng_preds, eng_confidence = self.eng_tokenizer.decode(pred)
-                eng_label_list.extend(eng_preds)
-                eng_confidence_list.extend(eng_confidence)
+                if "english" in self.lang:
+                    logits = self.eng_parseq(data)
+                    # Greedy decoding
+                    pred = logits.softmax(-1)
+                    eng_preds, eng_confidence = self.eng_tokenizer.decode(pred)
+                    eng_label_list.extend(eng_preds)
+                    eng_confidence_list.extend(eng_confidence)
+                else:
+                    eng_label_list.extend(["" for i in range(self.batch_size)])
+                    eng_confidence_list.extend([torch.tensor(-1.0) for i in range(self.batch_size)])
 
         text_list = []
         conf_list = []
