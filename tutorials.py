@@ -54,6 +54,7 @@ with open("outputs\handwritten_image.txt","w",encoding="utf-8") as f:
         f.write("\n")
 
 # For multiple image - text detect + text recognize
+ocr = OCR(detect=True)
 image_path = [r"test_images\0.jpg",r"test_images\tamil_sentence.jpg",
               r"test_images\tamil_sentence_1.png",
               r"test_images\tamil_handwritten.jpg",
@@ -109,5 +110,24 @@ image_path = [r"test_images\0.jpg",r"test_images\tamil_sentence.jpg"] # insert y
 text_list = ocr.predict(image_path)
 
 print("Multiple text detect recognize with confidence and bbox",text_list)
+
+image_path = [r"test_images\tamil_handwritten.jpg"] # insert your own path here
+text_list = ocr.predict(image_path)
+
+print("Multiple text detect recognize with confidence and bbox",text_list)
+
+with open(r"outputs\formatted_handwritten.txt","w",encoding="utf-8") as f:
+    for item in text_list:
+        current_line = 1
+        for info in item:
+            text,conf,bbox = info
+            line = bbox[1]
+            if line == current_line:
+                f.write(text + " ")
+            else:
+                f.write("\n"+text+ " ")
+                current_line = line
+
+        f.write("\n")
 
 

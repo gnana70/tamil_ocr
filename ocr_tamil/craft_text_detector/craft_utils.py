@@ -402,12 +402,12 @@ def getDetBoxes(textmap, linkmap, text_threshold, link_threshold, low_text, poly
         textmap, linkmap, text_threshold, link_threshold, low_text
     )
 
-    if poly:
-        polys = getPoly_core(boxes, labels, mapper, linkmap)
-    else:
-        polys = [None] * len(boxes)
+    # if poly:
+    #     polys = getPoly_core(boxes, labels, mapper, linkmap)
+    # else:
+    #     polys = [None] * len(boxes)
 
-    return boxes, polys
+    return boxes
 
 
 def adjustResultCoordinates(polys, ratio_w, ratio_h, ratio_net=2):

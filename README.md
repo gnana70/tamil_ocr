@@ -53,7 +53,18 @@
 <img width="500" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/develop/test_images/tamil_handwritten.jpg">
 
 
-MODEL OUTPUT: *நிமிர்ந்த நன்னடை மேற்கொண்ட பார்வையும் நிலத்தில் யார்க் கும் அஞ்சாத நெறிகளும் திமிர்ந்த ஞானச் செருக்கும் இருப்பதால் செம்மை மாதர் திறம்புவ தில்லையாம் அமிழ்ந்து பேரிரு ளாமறி யாமையில் அவல மெய்திக் கலையின் பி வாழ்வதை உமிழ்ந்து தள்ளுதல் பெண்ணற மாகுமாம் உதய கன்ன உரைப்பது கேட்டிரோ பாரதியார் ஹேமந்த் ள்*
+```
+MODEL OUTPUT: நிமிர்ந்த நன்னடை மேற்கொண்ட பார்வையும் 
+நிலத்தில் யார்க் கும் அஞ்சாத நெறிகளும் 
+திமிர்ந்த ஞானச் செருக்கும் இருப்பதால் 
+செம்மை மாதர் திறம்புவ தில்லையாம் 
+அமிழ்ந்து பேரிரு ளாமறி யாமையில் 
+அவல மெய்திக் கலையின்  வாழ்வதை 
+உமிழ்ந்து தள்ளுதல் பெண்ணற மாகுமாம் 
+உதய கன்ன உரைப்பது கேட்டிரோ 
+பாரதியார் 
+ஹேமந்த் ம 
+```
 
 
 ## How to Install and Use OCR Tamil 👨🏼‍💻
@@ -172,7 +183,7 @@ OCR module can be initialized by setting following parameters as per your requir
 
 2. Currently supports Only English and Tamil Language
 
-3. Document Text reading capability is limited. Auto identification of Paragraph, line are not supported along with Text detection model inability to detect and crop the Tamil text leads to accuracy decrease (**WORKAROUND** Can use your own text detection model along with OCR tamil text recognition model)
+3. Document Text reading capability is limited. Auto identification of Paragraph, reading order are not supported along with Text detection model inability to detect and crop the Tamil text leads to accuracy decrease (**WORKAROUND** Can use your own text detection model along with OCR tamil text recognition model)
 <p align="center">
 <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/tamil_sentence.jpg">
 </p>
