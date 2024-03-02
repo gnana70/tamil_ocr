@@ -1,5 +1,6 @@
 import os
 import time
+import torch
 
 import cv2
 import numpy as np
@@ -45,18 +46,12 @@ def get_prediction(
          "heatmaps": visualizations of the detected characters/links,
          "times": elapsed times of the sub modules, in seconds}
     """
-    t0 = time.time()
-
-    # read/convert image
-    image = image_utils.read_image(image)
 
     # resize
     img_resized, target_ratio, size_heatmap = image_utils.resize_aspect_ratio(
         image, long_size, interpolation=cv2.INTER_LINEAR
     )
     ratio_h = ratio_w = 1 / target_ratio
-    resize_time = time.time() - t0
-    t0 = time.time()
 
     # preprocessing
     x = image_utils.normalizeMeanVariance(img_resized)
@@ -64,78 +59,21 @@ def get_prediction(
     x = torch_utils.Variable(x.unsqueeze(0))  # [c, h, w] to [b, c, h, w]
     if cuda:
         x = x.cuda()
-    preprocessing_time = time.time() - t0
-    t0 = time.time()
 
     # forward pass
-    with torch_utils.no_grad():
+    with torch.inference_mode():
         y, feature = craft_net(x)
-    craftnet_time = time.time() - t0
-    t0 = time.time()
 
     # make score and link map
     score_text = y[0, :, :, 0].cpu().data.numpy()
     score_link = y[0, :, :, 1].cpu().data.numpy()
 
-    # refine link
-    # if refine_net is not None:
-    #     with torch_utils.no_grad():
-    #         y_refiner = refine_net(y, feature)
-    #     score_link = y_refiner[0, :, :, 0].cpu().data.numpy()
-    # refinenet_time = time.time() - t0
-    # t0 = time.time()
-
     # Post-processing
-    boxes, polys = craft_utils.getDetBoxes(
+    boxes = craft_utils.getDetBoxes(
         score_text, score_link, text_threshold, link_threshold, low_text, poly
     )
 
     # coordinate adjustment
     boxes = craft_utils.adjustResultCoordinates(boxes, ratio_w, ratio_h)
-    # polys = craft_utils.adjustResultCoordinates(polys, ratio_w, ratio_h)
-    # for k in range(len(polys)):
-    #     if polys[k] is None:
-    #         polys[k] = boxes[k]
-
-    # # get image size
-    # img_height = image.shape[0]
-    # img_width = image.shape[1]
-
-    # # calculate box coords as ratios to image size
-    # boxes_as_ratio = []
-    # for box in boxes:
-    #     boxes_as_ratio.append(box / [img_width, img_height])
-    # boxes_as_ratio = np.array(boxes_as_ratio)
-
-    # # calculate poly coords as ratios to image size
-    # polys_as_ratio = []
-    # for poly in polys:
-    #     polys_as_ratio.append(poly / [img_width, img_height])
-    # polys_as_ratio = np.array(polys_as_ratio)
-
-    # text_score_heatmap = image_utils.cvt2HeatmapImg(score_text)
-    # link_score_heatmap = image_utils.cvt2HeatmapImg(score_link)
-
-    # postprocess_time = time.time() - t0
-
-    # times = {
-    #     "resize_time": resize_time,
-    #     "preprocessing_time": preprocessing_time,
-    #     "craftnet_time": craftnet_time,
-    #     "refinenet_time": refinenet_time,
-    #     "postprocess_time": postprocess_time,
-    # }
-
-    # return {
-    #     "boxes": boxes,
-    #     "boxes_as_ratios": boxes_as_ratio,
-    #     "polys": polys,
-    #     "polys_as_ratios": polys_as_ratio,
-    #     "heatmaps": {
-    #         "text_score_heatmap": text_score_heatmap,
-    #         "link_score_heatmap": link_score_heatmap,
-    #     },
-    #     "times": times,
-    # }
 
     return boxes

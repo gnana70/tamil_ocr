@@ -18,8 +18,6 @@ charset-normalizer==3.3.2
     # via requests
 colorama==0.4.6
     # via tqdm
-coloredlogs==15.0.1
-    # via onnxruntime
 contourpy==1.2.0
     # via matplotlib
 cycler==0.12.1
@@ -29,8 +27,6 @@ filelock==3.13.1
     #   gdown
     #   huggingface-hub
     #   torch
-flatbuffers==23.5.26
-    # via onnxruntime
 fonttools==4.47.2
     # via matplotlib
 frozenlist==1.4.1
@@ -46,8 +42,6 @@ gdown==5.0.1
     # via ocr_tamil (pyproject.toml)
 huggingface-hub==0.20.3
     # via timm
-humanfriendly==10.0
-    # via coloredlogs
 idna==3.6
     # via
     #   requests
@@ -84,8 +78,6 @@ numpy==1.26.3
     #   imageio
     #   matplotlib
     #   ocr_tamil (pyproject.toml)
-    #   onnx
-    #   onnxruntime
     #   opencv-python
     #   pandas
     #   pytorch-lightning
@@ -94,10 +86,6 @@ numpy==1.26.3
     #   tifffile
     #   torchmetrics
     #   torchvision
-onnx==1.15.0
-    # via ocr_tamil (pyproject.toml)
-onnxruntime==1.17.0
-    # via ocr_tamil (pyproject.toml)
 open-tamil==1.1
     # via ocr_tamil (pyproject.toml)
 opencv-python==4.9.0.80
@@ -107,7 +95,6 @@ packaging==23.2
     #   huggingface-hub
     #   lightning-utilities
     #   matplotlib
-    #   onnxruntime
     #   pytorch-lightning
     #   scikit-image
     #   torchmetrics
@@ -120,14 +107,8 @@ pillow==10.2.0
     #   ocr_tamil (pyproject.toml)
     #   scikit-image
     #   torchvision
-protobuf==4.25.2
-    # via
-    #   onnx
-    #   onnxruntime
 pyparsing==3.1.1
     # via matplotlib
-pyreadline3==3.4.1
-    # via humanfriendly
 pysocks==1.7.1
     # via requests
 python-dateutil==2.8.2
@@ -160,9 +141,7 @@ six==1.16.0
 soupsieve==2.5
     # via beautifulsoup4
 sympy==1.12
-    # via
-    #   onnxruntime
-    #   torch
+    # via torch
 tifffile==2024.1.30
     # via scikit-image
 timm==0.9.12

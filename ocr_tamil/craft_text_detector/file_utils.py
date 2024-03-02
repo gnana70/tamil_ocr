@@ -141,7 +141,7 @@ def crop_poly(image, poly):
     return cropped
 
 
-def export_detected_region(image, poly, file_path, rectify=True):
+def export_detected_region(image, poly, rectify=True):
     """
     Arguments:
         image: full image
@@ -156,16 +156,16 @@ def export_detected_region(image, poly, file_path, rectify=True):
         result_rgb = crop_poly(image, poly)
 
     # export corpped region
-    result_bgr = cv2.cvtColor(result_rgb, cv2.COLOR_RGB2BGR)
+    # result_bgr = cv2.cvtColor(result_rgb, cv2.COLOR_RGB2BGR)
     # cv2.imwrite(file_path, result_bgr)
-    return result_bgr
+    return result_rgb
 
 
 def export_detected_regions(
     image,
     regions,
-    file_name: str = "image",
-    output_dir: str = "output/",
+    # file_name: str = "image",
+    # output_dir: str = "output/",
     rectify: bool = False,
 ):
     """
@@ -178,24 +178,22 @@ def export_detected_regions(
     """
 
     # read/convert image
-    image = read_image(image)
+    # image = read_image(image)
 
     # deepcopy image so that original is not altered
     image = copy.deepcopy(image)
 
     # create crops dir
-    crops_dir = os.path.join(output_dir, file_name + "_crops")
+    # crops_dir = os.path.join(output_dir, file_name + "_crops")
     # create_dir(crops_dir)
 
     # init exported file paths
     exported_file_paths = []
 
     # export regions
-    for ind, region in enumerate(regions):
-        # get export path
-        file_path = os.path.join(crops_dir, "crop_" + str(ind) + ".png")
+    for region in regions:
         # export region
-        exported_file_paths.append(export_detected_region(image, poly=region, file_path=file_path, rectify=rectify))
+        exported_file_paths.append(export_detected_region(image, poly=region, rectify=rectify))
         # note exported file path
         # exported_file_paths.append(file_path)
 
