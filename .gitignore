@@ -174,7 +174,8 @@ temp_images
 # *.egg-info
 # gradio
 # miscellenous
-# *.pth
-# *.onnx
+*.pth
+*.onnx
 # *.pt
-# *.ckpt
+*.ckpt
+*.txt

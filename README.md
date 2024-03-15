@@ -36,6 +36,7 @@
 ✔️ Tamil > 95%
 
 ## Comparison between Tesseract OCR, EasyOCR and OCR Tamil ⚖️
+🏎️ 10-40% faster inference time than EasyOCR and Tesseract
 
 🏎️ *10-40% faster inference time than EasyOCR and Tesseract*
 
