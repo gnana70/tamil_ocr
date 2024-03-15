@@ -36,6 +36,7 @@
 ✔️ Tamil > 95%
 
 ## Comparison between Tesseract OCR, EasyOCR and OCR Tamil ⚖️
+🏎️ 10-40% faster inference time than EasyOCR and Tesseract
 
  Input Image                                                                |  OCR TAMIL   🏆         | Tesseract         | EasyOCR |
 |:--------------------------------------------------------------------------:|:--------------------:|:-----------------:|:-----------------:|
@@ -243,5 +244,3 @@ Character **இ** missing due to text detection model error
   url={https://github.com/gnana70/tamil_ocr}
 }
 ```
-
-![logo](https://github.com/gnana70/tamil_ocr/raw/main/test_images/logo_1.gif)

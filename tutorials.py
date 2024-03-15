@@ -130,4 +130,24 @@ with open(r"outputs\formatted_handwritten.txt","w",encoding="utf-8") as f:
 
         f.write("\n")
 
+# For multiple image - text detect + text recognize
+image_path = [r"test_images\tamil_sentence_2.jpg"] # insert your own path here
+text_list = ocr.predict(image_path)
+
+print("Multiple text detect recognize with confidence and bbox",text_list)
+
+with open(r"outputs\english_tamil_combined.txt","w",encoding="utf-8") as f:
+    for item in text_list:
+        current_line = 1
+        for info in item:
+            text,conf,bbox = info
+            line = bbox[1]
+            if line == current_line:
+                f.write(text + " ")
+            else:
+                f.write("\n"+text+ " ")
+                current_line = line
+
+        f.write("\n")
+
 
