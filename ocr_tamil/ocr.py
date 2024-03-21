@@ -97,7 +97,7 @@ class OCR:
                  details=0,
                  lang=["tamil","english"],
                  mode = "full",
-                 fp16=True,
+                 fp16=False,
                  recognize_thres = 0.85) -> None:
 
         if enable_cuda:
