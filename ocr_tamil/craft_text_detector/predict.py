@@ -24,6 +24,7 @@ def get_prediction(
     cuda: bool = False,
     long_size: int = 1280,
     poly: bool = True,
+    half: bool = False
 ):
     """
     Arguments:
@@ -58,15 +59,19 @@ def get_prediction(
     x = torch_utils.from_numpy(x).permute(2, 0, 1)  # [h, w, c] to [c, h, w]
     x = torch_utils.Variable(x.unsqueeze(0))  # [c, h, w] to [b, c, h, w]
     if cuda:
-        x = x.cuda()
+        if half:
+            x = x.cuda().half()
+        else:
+            x = x.cuda()
 
     # forward pass
     with torch.inference_mode():
-        y, feature = craft_net(x)
+        y, _ = craft_net(x)
 
     # make score and link map
-    score_text = y[0, :, :, 0].cpu().data.numpy()
-    score_link = y[0, :, :, 1].cpu().data.numpy()
+    score_text = y[0, :, :, 0].cpu().data.numpy().astype(np.float32)
+    score_link = y[0, :, :, 1].cpu().data.numpy().astype(np.float32)
+
 
     # Post-processing
     boxes = craft_utils.getDetBoxes(

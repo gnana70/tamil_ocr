@@ -36,7 +36,8 @@ def copyStateDict(state_dict):
 
 def load_craftnet_model(
         cuda: bool = False,
-        weight_path: Optional[Union[str, Path]] = None
+        weight_path: Optional[Union[str, Path]] = None,
+        half: bool = False
 ):
     # get craft net path
     if weight_path is None:
@@ -66,8 +67,11 @@ def load_craftnet_model(
     # arange device
     if cuda:
         craft_net.load_state_dict(copyStateDict(torch_utils.load(weight_path)))
-
-        craft_net = craft_net.cuda()
+        if half:
+            craft_net = craft_net.cuda().half()
+        else:
+            craft_net = craft_net.cuda()
+            
         craft_net = torch_utils.DataParallel(craft_net)
         torch_utils.cudnn_benchmark = False
     else:
