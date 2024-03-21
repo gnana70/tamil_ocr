@@ -97,7 +97,7 @@ class OCR:
                  details=0,
                  lang=["tamil","english"],
                  mode = "full",
-                 fp16=True,
+                 fp16=False,
                  recognize_thres = 0.85) -> None:
 
         if enable_cuda:
@@ -154,7 +154,8 @@ class OCR:
         if self.detect:
             if torch.cuda.is_available() and enable_cuda:# load models
                 self.gpu=True
-                self.craft_net = load_craftnet_model(cuda=True,weight_path=self.detect_model_path)
+                self.craft_net = load_craftnet_model(cuda=True,weight_path=self.detect_model_path,
+                                                     half=self.fp16)
             else:
                 self.gpu=False
                 self.craft_net = load_craftnet_model(cuda=False,weight_path=self.detect_model_path)
@@ -173,8 +174,8 @@ class OCR:
         self.img_transform = self.get_transform()
         self.eng_character_set = """0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"""
         self.eng_tokenizer = Tokenizer(self.eng_character_set)
-        self.eng_parseq = load_from_checkpoint("pretrained=parseq").eval().to(self.device)
-        self.tamil_parseq = torch.load(self.tamil_model_path).eval().to(self.device)
+        self.eng_parseq = load_from_checkpoint("pretrained=parseq").to(self.device).eval()
+        self.tamil_parseq = torch.load(self.tamil_model_path).to(self.device).eval()
 
         # self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_tamil_full_char.ckpt")
         # self.tamil_parseq.hparams['decode_ar'] = True   
@@ -227,7 +228,8 @@ class OCR:
             low_text=self.low_text,
             cuda=self.gpu,
             long_size=size,
-            poly = False
+            poly = False,
+            half=self.fp16
         )
 
         # print(prediction_result)
