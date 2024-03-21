@@ -174,8 +174,13 @@ class OCR:
         self.img_transform = self.get_transform()
         self.eng_character_set = """0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"""
         self.eng_tokenizer = Tokenizer(self.eng_character_set)
-        self.eng_parseq = load_from_checkpoint("pretrained=parseq").to(self.device).eval()
-        self.tamil_parseq = torch.load(self.tamil_model_path).to(self.device).eval()
+
+        if self.fp16:
+            self.eng_parseq = load_from_checkpoint("pretrained=parseq").to(self.device).half().eval()
+            self.tamil_parseq = torch.load(self.tamil_model_path).to(self.device).half().eval()
+        else:
+            self.eng_parseq = load_from_checkpoint("pretrained=parseq").to(self.device).eval()
+            self.tamil_parseq = torch.load(self.tamil_model_path).to(self.device).eval()
 
         # self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_tamil_full_char.ckpt")
         # self.tamil_parseq.hparams['decode_ar'] = True   
@@ -327,34 +332,39 @@ class OCR:
         eng_label_list = []
         eng_confidence_list = []
 
-        with torch.inference_mode():
-            for data in dataloader:
+        
+        for data in dataloader:
+            if self.fp16:
+                data = data.to(self.device).half()
+            else:
                 data = data.to(self.device) 
 
-                if "tamil" in self.lang:
+            if "tamil" in self.lang:
+                with torch.cuda.amp.autocast() and torch.inference_mode():
                     logits = self.tamil_parseq(data)
-                    # Greedy decoding
-                    pred = logits.softmax(-1)
-                    label, confidence = self.tamil_parseq.tokenizer.decode(pred)
-                    tamil_label_list.extend(label)
-                    tamil_confidence_list.extend(confidence)
-                else:
-                    tamil_label_list.extend(["" for i in range(self.batch_size)])
-                    tamil_confidence_list.extend([torch.tensor(-1.0) for i in range(self.batch_size)])
+                # Greedy decoding
+                pred = logits.softmax(-1)
+                label, confidence = self.tamil_parseq.tokenizer.decode(pred)
+                tamil_label_list.extend(label)
+                tamil_confidence_list.extend(confidence)
+            else:
+                tamil_label_list.extend(["" for i in range(self.batch_size)])
+                tamil_confidence_list.extend([torch.tensor(-1.0) for i in range(self.batch_size)])
 
 
-                # english prediction
-                # eng_preds, eng_confidence = self.read_english_batch(data)
-                if "english" in self.lang:
+            # english prediction
+            # eng_preds, eng_confidence = self.read_english_batch(data)
+            if "english" in self.lang:
+                with torch.cuda.amp.autocast() and torch.inference_mode():
                     logits = self.eng_parseq(data)
-                    # Greedy decoding
-                    pred = logits.softmax(-1)
-                    eng_preds, eng_confidence = self.eng_tokenizer.decode(pred)
-                    eng_label_list.extend(eng_preds)
-                    eng_confidence_list.extend(eng_confidence)
-                else:
-                    eng_label_list.extend(["" for i in range(self.batch_size)])
-                    eng_confidence_list.extend([torch.tensor(-1.0) for i in range(self.batch_size)])
+                # Greedy decoding
+                pred = logits.softmax(-1)
+                eng_preds, eng_confidence = self.eng_tokenizer.decode(pred)
+                eng_label_list.extend(eng_preds)
+                eng_confidence_list.extend(eng_confidence)
+            else:
+                eng_label_list.extend(["" for i in range(self.batch_size)])
+                eng_confidence_list.extend([torch.tensor(-1.0) for i in range(self.batch_size)])
 
         text_list = []
         conf_list = []

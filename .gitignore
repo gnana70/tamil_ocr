@@ -163,6 +163,7 @@ cython_debug/
 .ckpt 
 code.txt
 test_venv
+venv_cpu
 release_venv
 test_folder
 gradio_venv
