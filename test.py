@@ -1,8 +1,7 @@
 from ocr_tamil.ocr import OCR
 from time import time
 
-
-ocr = OCR(detect=True,details=2,text_threshold=0.3,fp16=True)
+ocr = OCR(detect=True,details=2,text_threshold=0.3,fp16=False)
 # For single image - text detect + text recognize
 image_path = r"test_images\tamil_newspaper.jpg" # insert your own path here
 
