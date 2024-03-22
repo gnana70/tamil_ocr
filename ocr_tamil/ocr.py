@@ -251,22 +251,27 @@ class OCR:
             if w>0 and h>0:
                 new_bbox.append([x,y,w,h])
 
-        ordered_new_bbox,line_info = self.sort_bboxes(new_bbox)
+        if len(new_bbox):
+            ordered_new_bbox,line_info = self.sort_bboxes(new_bbox)
 
-        updated_prediction_result = []
-        for ordered_bbox in ordered_new_bbox:
-            index_val = new_bbox.index(ordered_bbox)
-            updated_prediction_result.append(prediction_result[index_val])
+            updated_prediction_result = []
+            for ordered_bbox in ordered_new_bbox:
+                index_val = new_bbox.index(ordered_bbox)
+                updated_prediction_result.append(prediction_result[index_val])
 
-        # export detected text regions
-        exported_file_paths = export_detected_regions(
-            image=image,
-            regions=updated_prediction_result ,#["boxes"],
-            # output_dir=self.output_dir,
-            rectify=False
-        )
+            # export detected text regions
+            exported_file_paths = export_detected_regions(
+                image=image,
+                regions=updated_prediction_result ,#["boxes"],
+                # output_dir=self.output_dir,
+                rectify=False
+            )
 
-        updated_prediction_result = [(i,line) for i,line in zip(updated_prediction_result,line_info)]
+            updated_prediction_result = [(i,line) for i,line in zip(updated_prediction_result,line_info)]
+
+        else:
+            updated_prediction_result = []
+            exported_file_paths = []
 
         torch.cuda.empty_cache()
 
