@@ -110,7 +110,7 @@ from ocr_tamil.ocr import OCR
 image_path = r"test_images\0.jpg" # insert your own image path here
 ocr = OCR(detect=True)
 texts = ocr.predict(image_path)
-print(" ".join(text_list[0]))
+print(" ".join(texts))
 
 ## OUTPUT : கொடைக்கானல் Kodaikanal 
 
