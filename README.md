@@ -23,7 +23,7 @@
   </p>
 </div>
 
- OCR Tamil can help you extract text from signboard, nameplates, storefronts etc., from Natural Scenes with high accuracy. This version of OCR is much more robust to tilted text compared to the Tesseract, Paddle OCR and Easy OCR as they are primarily built to work on the documents texts and not on natural scenes. This model is work in progress, feel free to contribute!!!
+ OCR Tamil can help you extract text from signboard, nameplates, storefronts etc., from Natural Scenes with high accuracy. This version of OCR is much more robust to tilted text compared to the Tesseract, Paddle OCR and Easy OCR as they are primarily built to work on the documents texts and not on natural scenes.
 
 ## Languages Supported 🔛
 **➡️ English**
@@ -36,7 +36,6 @@
 ✔️ Tamil > 95%
 
 ## Comparison between Tesseract OCR, EasyOCR and OCR Tamil ⚖️
-🏎️ 10-40% faster inference time than EasyOCR and Tesseract
 
 🏎️ *10-40% faster inference time than EasyOCR and Tesseract*
 
@@ -177,30 +176,31 @@ OCR module can be initialized by setting following parameters as per your requir
 
 ## Limitations⛔
 
-1. Unable to read the text if they are present in rotated forms
+1. Document text reading capability is not supported as library doesn't have
+
+      **➡️Auto identification of Paragraph**
+
+      **➡️Orientation detection**
+
+      **➡️Skew correction**
+
+      **➡️Reading order prediction**
+
+      **➡️Document unwarping**
+
+      **➡️Optimal Text detection for Document text not available**  
+
+      (**WORKAROUND** Bring your own models for above cases and use with OCR tamil for text recognition)
+
+
+2. Unable to read the text if they are present in rotated forms
 
 <p align="left">
 <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/9.jpg"> 
 <img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/8.jpg">
 </p>
 
-2. Currently supports Only English and Tamil Language
-
-3. Document Text reading capability is limited. Auto identification of Paragraph, reading order are not supported along with Text detection model inability to detect and crop the Tamil text leads to accuracy decrease (**WORKAROUND** Can use your own text detection model along with OCR tamil text recognition model)
-<p align="center">
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/tamil_sentence.jpg">
-</p>
-<p align="center">
-<span>Cropped Text from Text detection Model</span>
-</p>
-<p align="center">
-<img width="200" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/tamil_sentence_crop.jpg">
-</p>
-<p align="center">
-Character **இ** missing due to text detection model error 
-</p>
-
-**?**யற்கை மூலிகைகளில் இருந்து ஈர்த்தெடுக்கக்கப்பட்ட வீரிய உட்பொருட்களை உள்ளடக்கி எந்த இரசாயன சேர்க்கைகளும் இல்லாமல் உருவாக்கப்பட்ட இந்தியாவின் முதல் சித்த தயாரிப்பு 
+3. Currently supports Only Tamil Language. I don't own english model as it's taken from open source implementation of parseq
 
 
 ## Acknowledgements 👏
@@ -246,4 +246,3 @@ Character **இ** missing due to text detection model error
   url={https://github.com/gnana70/tamil_ocr}
 }
 ```
-
