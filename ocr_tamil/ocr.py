@@ -33,6 +33,13 @@ warnings.filterwarnings("ignore")
 
 
 class ParseqDataset(Dataset):
+    """
+    
+    Parseq Dataset loader
+
+    Args:
+        Dataset (list): List of Images
+    """
     def __init__(self, data, transform=None):
         self.data = data
         self.transform = transform
@@ -52,6 +59,15 @@ class ParseqDataset(Dataset):
 
 
 def download(url: str, dest_folder: str):
+    """Download the model files from the server
+
+    Args:
+        url (str): file url
+        dest_folder (str): local folder path
+
+    Raises:
+        RuntimeError: _description_
+    """
     if not os.path.exists(dest_folder):
         os.makedirs(dest_folder)  # create folder if it does not exist
 
@@ -85,6 +101,8 @@ def download(url: str, dest_folder: str):
             os.remove(file_path)
 
 class OCR:
+    """Tamil OCR class
+    """
     def __init__(self,detect=False,
                  tamil_model_path=None,
                  eng_model_path=None,
@@ -96,9 +114,27 @@ class OCR:
                  low_text=0.3,
                  details=0,
                  lang=["tamil","english"],
-                 mode = "full",
                  fp16=False,
                  recognize_thres = 0.85) -> None:
+        """
+        
+        Tamil OCR prediction initilization
+
+        Args:
+            detect (bool, optional): To enable the text detection. Defaults to False.
+            tamil_model_path (_type_, optional): Path for tamil text recognition model. Defaults to None.
+            eng_model_path (_type_, optional): Path for english text recognition model. Defaults to None.
+            detect_model_path (_type_, optional): Path for text detect model. Defaults to None.
+            enable_cuda (bool, optional): To enable or disable cuda. Defaults to True.
+            batch_size (int, optional): Prediction batch size for text recognition. Defaults to 8.
+            text_threshold (float, optional): Text detection theshold to classify text or not. Defaults to 0.5.
+            link_threshold (float, optional): To combine characters into words (distance). Defaults to 0.1.
+            low_text (float, optional): Helps in padding while cropping results from text detection. Defaults to 0.3.
+            details (int, optional): Output infomration controller. Defaults to 0.
+            lang (list, optional): Text recognize language. Defaults to ["tamil","english"].
+            fp16 (bool, optional): full precision vs half precision (experimental). Defaults to False.
+            recognize_thres (float, optional): Threshold to filter the texts based on prediction confidence (text recognition). Defaults to 0.85.
+        """
 
         if enable_cuda:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -161,6 +197,11 @@ class OCR:
                 self.craft_net = load_craftnet_model(cuda=False,weight_path=self.detect_model_path)
 
     def get_transform(self):
+        """Basic transform for prediction
+
+        Returns:
+            torch transforms: torch vision transformation
+        """
         transforms = []
         transforms.extend([
             T.Resize([ 32, 128 ], T.InterpolationMode.BICUBIC),
@@ -170,6 +211,9 @@ class OCR:
         return T.Compose(transforms)
 
     def load_model(self):
+        """
+        Load the required models into the memory
+        """
         
         self.img_transform = self.get_transform()
         self.eng_character_set = """0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"""
@@ -194,6 +238,7 @@ class OCR:
         # self.tamil_parseq = torch.load("ocr_tamil\model_weights\parseq_tamil_rotate.pt").to(self.device).eval()
 
     def sort_bboxes(self,contours):
+
         c = np.array(contours)
         max_height = np.median(c[::, 3]) * 0.5
         
@@ -219,6 +264,15 @@ class OCR:
         return contours_sorted,line_info
     
     def craft_detect(self,image,**kwargs):
+        """Text detection predict
+
+        Args:
+            image (numpy array): image numpy array
+
+        Returns:
+            list: list of cropped numpy arrays for text detected
+            list: Bbox informations
+        """
         size = max(image.shape[0],image.shape[1],640)
 
         # Reshaping to the nearest size
@@ -278,6 +332,16 @@ class OCR:
         return exported_file_paths,updated_prediction_result
 
     def decode_file_name(self,decode_text,text_char_confidence,special_sep_char="~"):
+        """Maps the encoded text to tamil words
+
+        Args:
+            decode_text (string): text to decode
+            text_char_confidence (float): minimum text recognition threshold
+            special_sep_char (str, optional): seperator for each character. Defaults to "~".
+
+        Returns:
+            string: decoded text
+        """
         
 
         indices = [x for x, v in enumerate(decode_text) if v == special_sep_char]
@@ -307,6 +371,14 @@ class OCR:
         return tamil_word
     
     def read_image_input(self,image):
+        """Reads the input image
+
+        Args:
+            image: Path, bytes and numpy array
+
+        Returns:
+            numpy array: image numpy array
+        """
         if type(image) == str:
             img = cv2.imread(image)
             # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -328,6 +400,15 @@ class OCR:
         return img
         
     def text_recognize_batch(self,exported_regions):
+        """Text recognition predictor
+
+        Args:
+            exported_regions (list): list of numpy array
+
+        Returns:
+            list: list of predicted text and confidence informations
+        """
+
 
         dataset = ParseqDataset(exported_regions, transform=self.img_transform)
         dataloader = DataLoader(dataset, batch_size=self.batch_size)
@@ -405,6 +486,16 @@ class OCR:
         return text_list,conf_list
     
     def output_formatter(self,text_list,conf_list,updated_prediction_result=None):
+        """Output structure formatter
+
+        Args:
+            text_list (list): text information
+            conf_list (list): confidence information
+            updated_prediction_result (list, optional): bbox information. Defaults to None.
+
+        Returns:
+            list: output results
+        """
         final_result = []
 
         if not self.details:
@@ -426,6 +517,12 @@ class OCR:
         return final_result
 
     def predict(self,image):
+
+        """ Detect and recognize text informations
+
+        Returns:
+            List: extracted text information
+        """
 
         # To handle multiple images
         if isinstance(image,list):
