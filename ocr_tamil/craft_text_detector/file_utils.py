@@ -62,6 +62,14 @@ def list_files(in_path):
     # gt_files.sort()
     return img_files, mask_files, gt_files
 
+def square_time(image, poly):
+    ys = poly[:,0]
+    xs = poly[:,1]
+    max_x = int(max(xs)+1)
+    min_x = int(min(xs))
+    max_y = int(max(ys)+1)
+    min_y = int(min(ys))
+    return image[min_x:max_x, min_y:max_y]
 
 def rectify_poly(img, poly):
     # Use Affine transform
@@ -141,7 +149,7 @@ def crop_poly(image, poly):
     return cropped
 
 
-def export_detected_region(image, poly, rectify=True):
+def export_detected_region(image, poly, rectify=False):
     """
     Arguments:
         image: full image
@@ -153,11 +161,8 @@ def export_detected_region(image, poly, rectify=True):
         # rectify poly region
         result_rgb = rectify_poly(image, poly)
     else:
-        result_rgb = crop_poly(image, poly)
+        result_rgb = square_time(image, poly)
 
-    # export corpped region
-    # result_bgr = cv2.cvtColor(result_rgb, cv2.COLOR_RGB2BGR)
-    # cv2.imwrite(file_path, result_bgr)
     return result_rgb
 
 
