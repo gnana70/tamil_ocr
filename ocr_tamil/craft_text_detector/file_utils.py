@@ -158,7 +158,7 @@ def crop_poly(image, poly):
     return cropped
 
 
-def export_detected_region(image, poly, method="rectify"):
+def export_detected_region(image, poly, method="crop"):
     """
     Grab the given polygon from the image
 
