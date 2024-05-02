@@ -62,6 +62,23 @@ def list_files(in_path):
     # gt_files.sort()
     return img_files, mask_files, gt_files
 
+def crop_rectangle(image, poly):
+    """Crops the image to a rectangule with no tilt based on the given polygon
+
+    Args:
+        image (np.ndarray): The iamge to crop a rectangle from
+        poly (np.ndarray): 2d array where the first dimension is points and the second dimension is of size (2) and contains the x, y values for the point 
+
+    Returns:
+        np.ndarray: Rectangular crop of the original image
+    """
+    ys = poly[:,0]
+    xs = poly[:,1]
+    max_x = int(max(xs)+1)
+    min_x = int(min(xs))
+    max_y = int(max(ys)+1)
+    min_y = int(min(ys))
+    return image[min_x:max_x, min_y:max_y]
 
 def rectify_poly(img, poly):
     # Use Affine transform
@@ -141,23 +158,27 @@ def crop_poly(image, poly):
     return cropped
 
 
-def export_detected_region(image, poly, rectify=True):
+def export_detected_region(image, poly, method="crop"):
     """
+    Grab the given polygon from the image
+
     Arguments:
         image: full image
         points: bbox or poly points
         file_path: path to be exported
-        rectify: rectify detected polygon by affine transform
+        method: How to extract the section. Must be one of crop, rectify, or rectangular. Rectangular is faster but does not support text that is rotated.
     """
-    if rectify:
+    assert method in {"crop", "rectify", "rectangular"}, "Method must be one of crop, rectify, or rectangular"
+    if method == "rectify":
         # rectify poly region
         result_rgb = rectify_poly(image, poly)
-    else:
+        
+    elif method == "crop":
         result_rgb = crop_poly(image, poly)
 
-    # export corpped region
-    # result_bgr = cv2.cvtColor(result_rgb, cv2.COLOR_RGB2BGR)
-    # cv2.imwrite(file_path, result_bgr)
+    elif method == "rectangular":
+        result_rgb = crop_rectangle(image, poly)
+
     return result_rgb
 
 
