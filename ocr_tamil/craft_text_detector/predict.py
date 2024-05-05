@@ -13,6 +13,47 @@ from . import craft_utils as craft_utils
 from . import image_utils as image_utils
 from . import torch_utils as torch_utils
 
+from torchvision.transforms import functional as F
+from torchvision.transforms import v2 as T
+from torch.utils.data import Dataset, DataLoader
+from PIL import Image
+import torch
+import cv2
+import numpy as np
+
+
+class CraftDataset(Dataset):
+    """
+    
+    Craft Dataset loader
+
+    Args:
+        Dataset (list): List of Images
+    """
+    def __init__(self, data, resize=[960,1080]):
+        self.data = data
+        self.resize = resize
+        transforms = []
+        transforms.extend([T.Resize(resize, T.InterpolationMode.BICUBIC),
+                    T.ToImage(), 
+                    T.ToDtype(torch.float32, scale=True),
+                    T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+        self.transform = T.Compose(transforms)
+        
+    def __getitem__(self, index):
+        x = self.data[index]
+        height, width, _ = x.shape
+        x = Image.fromarray(np.uint8(x)).convert('RGB')
+        x = self.transform(x)
+
+        w_ratio = self.resize[0] / width
+        h_ratio = self.resize[1] / width
+
+        return x,w_ratio,h_ratio
+    
+    def __len__(self):
+        return len(self.data)
+
 
 def get_prediction(
     image,
@@ -47,38 +88,42 @@ def get_prediction(
          "heatmaps": visualizations of the detected characters/links,
          "times": elapsed times of the sub modules, in seconds}
     """
+    if isinstance(long_size,int):
 
-    # resize
-    img_resized, target_ratio, size_heatmap = image_utils.resize_aspect_ratio(
-        image, long_size, interpolation=cv2.INTER_LINEAR
-    )
-    ratio_h = ratio_w = 1 / target_ratio
+        # resize
+        img_resized, target_ratio, size_heatmap = image_utils.resize_aspect_ratio(
+            image, long_size, interpolation=cv2.INTER_LINEAR
+        )
+        ratio_h = ratio_w = 1 / target_ratio
 
-    # preprocessing
-    x = image_utils.normalizeMeanVariance(img_resized)
-    x = torch_utils.from_numpy(x).permute(2, 0, 1)  # [h, w, c] to [c, h, w]
-    x = torch_utils.Variable(x.unsqueeze(0))  # [c, h, w] to [b, c, h, w]
-    if cuda:
-        if half:
-            x = x.cuda().half()
-        else:
-            x = x.cuda()
+        # preprocessing
+        x = image_utils.normalizeMeanVariance(img_resized)
+        x = torch_utils.from_numpy(x).permute(2, 0, 1)  # [h, w, c] to [c, h, w]
+        x = torch_utils.Variable(x.unsqueeze(0))  # [c, h, w] to [b, c, h, w]
+        if cuda:
+            if half:
+                x = x.cuda().half()
+            else:
+                x = x.cuda()
 
-    # forward pass
-    with torch.inference_mode():
-        y, _ = craft_net(x)
+        # forward pass
+        with torch.inference_mode():
+            y, _ = craft_net(x)
 
-    # make score and link map
-    score_text = y[0, :, :, 0].cpu().data.numpy().astype(np.float32)
-    score_link = y[0, :, :, 1].cpu().data.numpy().astype(np.float32)
+        # make score and link map
+        score_text = y[0, :, :, 0].cpu().data.numpy().astype(np.float32)
+        score_link = y[0, :, :, 1].cpu().data.numpy().astype(np.float32)
 
 
-    # Post-processing
-    boxes = craft_utils.getDetBoxes(
-        score_text, score_link, text_threshold, link_threshold, low_text, poly
-    )
+        # Post-processing
+        boxes = craft_utils.getDetBoxes(
+            score_text, score_link, text_threshold, link_threshold, low_text, poly
+        )
 
-    # coordinate adjustment
-    boxes = craft_utils.adjustResultCoordinates(boxes, ratio_w, ratio_h)
+        # coordinate adjustment
+        boxes = craft_utils.adjustResultCoordinates(boxes, ratio_w, ratio_h)
+
+    else:
+        pass
 
     return boxes
