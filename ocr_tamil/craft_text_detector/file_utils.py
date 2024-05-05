@@ -187,7 +187,7 @@ def export_detected_regions(
     regions,
     # file_name: str = "image",
     # output_dir: str = "output/",
-    rectify: bool = False,
+    method: str = False,
 ):
     """
     Arguments:
@@ -214,7 +214,7 @@ def export_detected_regions(
     # export regions
     for region in regions:
         # export region
-        exported_file_paths.append(export_detected_region(image, poly=region, rectify=rectify))
+        exported_file_paths.append(export_detected_region(image, poly=region, method=method))
         # note exported file path
         # exported_file_paths.append(file_path)
 
