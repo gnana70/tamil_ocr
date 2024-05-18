@@ -169,9 +169,10 @@ class OCR:
 
         self.special_character = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}']
         
-        tamil_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_tamil_v3.pt"
+        
+        tamil_file_url = "https://github.com/gnana70/models/raw/main/ocr_tamil/parseq_tamil_v3.pt"
         # eng_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/parseq_eng.onnx"
-        detect_file_url = "https://github.com/gnana70/tamil_ocr/raw/develop/ocr_tamil/model_weights/craft_mlt_25k.pth"
+        detect_file_url = "https://github.com/gnana70/models/raw/main/ocr_tamil/craft_mlt_25k.pth"
         
         model_save_location = os.path.join(Path.home(),".model_weights")
 
