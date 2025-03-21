@@ -16,15 +16,17 @@
 import math
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple, List, Any
 
 import pytorch_lightning as pl
 import torch
 import torch.nn.functional as F
-from pytorch_lightning.utilities.types import EPOCH_OUTPUT, STEP_OUTPUT
 from torch import Tensor
 from ocr_tamil.strhub.data.utils import CharsetAdapter, CTCTokenizer, Tokenizer, BaseTokenizer
 
+# In PyTorch Lightning 2.0+, EPOCH_OUTPUT and STEP_OUTPUT are just type aliases for Any
+EPOCH_OUTPUT = Any
+STEP_OUTPUT = Any
 
 @dataclass
 class BatchResult:

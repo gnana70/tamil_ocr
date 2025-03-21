@@ -228,12 +228,17 @@ class OCR:
         self.eng_character_set = """0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"""
         self.eng_tokenizer = Tokenizer(self.eng_character_set)
 
+        # Import PARSeq class and add it to safe globals for PyTorch 2.6+
+        from ocr_tamil.strhub.models.parseq.system import PARSeq
+        import torch.serialization
+        torch.serialization.add_safe_globals([('ocr_tamil.strhub.models.parseq.system', 'PARSeq')])
+
         if self.fp16:
             self.eng_parseq = load_from_checkpoint("pretrained=parseq").to(self.device).half().eval()
-            self.tamil_parseq = torch.load(self.tamil_model_path).to(self.device).half().eval()
+            self.tamil_parseq = torch.load(self.tamil_model_path, weights_only=False).to(self.device).half().eval()
         else:
             self.eng_parseq = load_from_checkpoint("pretrained=parseq").to(self.device).eval()
-            self.tamil_parseq = torch.load(self.tamil_model_path).to(self.device).eval()
+            self.tamil_parseq = torch.load(self.tamil_model_path, weights_only=False).to(self.device).eval()
 
         # self.tamil_parseq = load_from_checkpoint("ocr_tamil\model_weights\parseq_tamil_full_char.ckpt")
         # self.tamil_parseq.hparams['decode_ar'] = True   

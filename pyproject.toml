@@ -27,7 +27,7 @@ dependencies = [
     "numpy",
     "pandas",
     "gdown",
-    "pytorch-lightning==1.9.5",
+    "pytorch-lightning>=2.0.0",
     "matplotlib",
     "scikit-image",
     "timm"
