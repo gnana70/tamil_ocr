@@ -35,6 +35,12 @@
 
 ✔️ Tamil > 95%
 
+## Model checkpoint
+<a href="https://huggingface.co/GnanaPrasath/ocr_tamil">
+🤗 Tamil OCR
+</a>
+
+
 ## Comparison between Tesseract OCR, EasyOCR and OCR Tamil ⚖️
 
 🏎️ *10-40% faster inference time than EasyOCR and Tesseract*
@@ -109,7 +115,7 @@ from ocr_tamil.ocr import OCR
 image_path = r"test_images\0.jpg" # insert your own image path here
 ocr = OCR(detect=True)
 texts = ocr.predict(image_path)
-print(" ".join(texts))
+print(" ".join(texts[0]))
 
 ## OUTPUT : கொடைக்கானல் Kodaikanal 
 
@@ -169,6 +175,11 @@ OCR module can be initialized by setting following parameters as per your requir
 ```
 
 **Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
+
+## Dataset Preparation
+<a href="https://colab.research.google.com/drive/1U6flb8QhrF2psyX7k-Appr69qpclPWkQ?usp=sharing">
+Sample code for image generation
+</a> 
 
 ## Applications⚡
 1. ADAS system navigation based on the signboards + maps (hybrid approach) 🚁
