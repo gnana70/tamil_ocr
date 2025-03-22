@@ -80,7 +80,6 @@ numpy==1.26.3
     #   ocr_tamil (pyproject.toml)
     #   opencv-python
     #   pandas
-    #   pytorch-lightning
     #   scikit-image
     #   scipy
     #   tifffile
@@ -115,7 +114,7 @@ python-dateutil==2.8.2
     # via
     #   matplotlib
     #   pandas
-pytorch-lightning==1.9.5
+pytorch-lightning==2.5.1
     # via ocr_tamil (pyproject.toml)
 pytz==2024.1
     # via pandas
