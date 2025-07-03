@@ -122,7 +122,7 @@ print(" ".join(texts[0]))
 ```
 <img width="400" alt="teaser" src="https://github.com/gnana70/tamil_ocr/raw/main/test_images/0.jpg">
 
-**For line by line inference Text detect + Recognition **
+**For line by line inference Text detect + Recognition**
 
 ```
 from ocr_tamil.ocr import OCR
