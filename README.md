@@ -168,7 +168,7 @@ OCR module can be initialized by setting following parameters as per your requir
 5. To configure the language to be extracted -> OCR(lang=["tamil"]) # list can take "english" or "tamil" or both. Defaults to both language
 ```
 
-**Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
+**Tested using Python 3.12 on Windows & Linux (Ubuntu 22.04) Machines**
 
 ## Applications⚡
 1. ADAS system navigation based on the signboards + maps (hybrid approach) 🚁
