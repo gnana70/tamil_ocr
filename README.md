@@ -201,7 +201,7 @@ OCR module can be initialized by setting following parameters as per your requir
 5. To configure the language to be extracted -> OCR(lang=["tamil"]) # list can take "english" or "tamil" or both. Defaults to both language
 ```
 
-**Tested using Python 3.10 on Windows & Linux (Ubuntu 22.04) Machines**
+**Tested using Python 3.12 on Windows & Linux (Ubuntu 22.04) Machines**
 
 ## Dataset Preparation
 <a href="https://colab.research.google.com/drive/1U6flb8QhrF2psyX7k-Appr69qpclPWkQ?usp=sharing">

@@ -65,7 +65,7 @@ def get_prediction(
             x = x.cuda()
 
     # forward pass
-    with torch.inference_mode():
+    with torch.cuda.amp.autocast() and torch.inference_mode():
         y, _ = craft_net(x)
 
     # make score and link map
