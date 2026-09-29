@@ -84,6 +84,8 @@ MODEL OUTPUT: நிமிர்ந்த நன்னடை மேற்கொ�
 
 🤗 Test it in [Huggingface spaces](https://huggingface.co/spaces/GnanaPrasath/ocr_tamil)
 
+🎥 Watch the [video on YouTube](https://youtu.be/5HRN41h-oxs)
+
 
 ### Pip install instructions🐍
 In your command line, run the following command ```pip install ocr_tamil```
