@@ -1,3 +1,7 @@
+<a href="https://youtu.be/5HRN41h-oxs">
+  <img src="https://img.youtube.com/vi/5HRN41h-oxs/maxresdefault.jpg" alt="Watch the OCR Tamil video on YouTube" width="100%">
+</a>
+
 <h1 align="center"> OCR Tamil - Easy, Accurate and Simple to use Tamil OCR - (ஒளி எழுத்துணரி)</h1>
 
 <p align="center">❤️️❤️️Please star✨ it if you like❤️️❤️️</p>
