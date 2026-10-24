@@ -1,0 +1,5 @@
+flask
+werkzeug
+ocr_tamil
+pillow
+gunicorn
