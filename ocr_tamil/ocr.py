@@ -76,7 +76,7 @@ def download(url: str, dest_folder: str):
 
     if not os.path.exists(file_path):
         try:
-            response = requests.get(url, stream=True,verify=False)
+            response = requests.get(url, stream=True)
             if response.ok:
                 print("saving to", os.path.abspath(file_path))
                 print("Download would take several minutes")
